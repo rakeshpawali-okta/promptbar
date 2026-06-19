@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Product Owner prompt pack — 5 prompts for product managers and owners",
+  "prompts": [
+    {
+      "title": "Write User Story",
+      "tag": "Agile",
+      "group": "Product Owner",
+      "desc": "Draft a well-formed user story with acceptance criteria.",
+      "prompt": "[ROLE]    You are an experienced Product Owner.\n[TASK]    Write a well-formed user story for the feature or need described below.\n[STYLE]   Clear and outcome-focused.\n[FORMAT]  User story in As a / I want / So that format + 3-5 acceptance criteria in Gherkin (Given/When/Then).\n[INPUT]   "
+    },
+    {
+      "title": "Define Acceptance Criteria",
+      "tag": "Agile",
+      "group": "Product Owner",
+      "desc": "Generate detailed, testable acceptance criteria from a feature description.",
+      "prompt": "[ROLE]    You are an experienced Product Owner.\n[TASK]    Write detailed acceptance criteria for the feature or user story below.\n[STYLE]   Specific, testable, unambiguous.\n[FORMAT]  Numbered list in Gherkin format (Given/When/Then). Include edge cases.\n[INPUT]   "
+    },
+    {
+      "title": "Sprint Retrospective Summary",
+      "tag": "Agile",
+      "group": "Product Owner",
+      "desc": "Summarise retro notes into structured actions.",
+      "prompt": "[ROLE]    You are a Product Owner facilitating a sprint retrospective.\n[TASK]    Summarise the retrospective notes below into a structured output.\n[STYLE]   Concise, constructive, action-oriented.\n[FORMAT]  Three sections: What Went Well, What To Improve, Action Items (owner + action).\n[INPUT]   "
+    },
+    {
+      "title": "Feature Prioritisation Brief",
+      "tag": "Strategy",
+      "group": "Product Owner",
+      "desc": "Write a prioritisation brief for a backlog of features.",
+      "prompt": "[ROLE]    You are a Product Owner at a B2B SaaS company.\n[TASK]    Write a prioritisation brief for the features or requests listed below.\n[STYLE]   Objective, data-informed, stakeholder-friendly.\n[FORMAT]  Score each item on User Impact, Business Value, Effort (Low/Med/High). Add recommended priority order with rationale.\n[INPUT]   "
+    },
+    {
+      "title": "Stakeholder Update",
+      "tag": "Communication",
+      "group": "Product Owner",
+      "desc": "Write a concise weekly product update for stakeholders.",
+      "prompt": "[ROLE]    You are a Product Owner sending a weekly stakeholder update.\n[TASK]    Write a concise product update based on the notes below.\n[STYLE]   Executive-friendly, outcome-focused, no jargon.\n[FORMAT]  Sections: Summary (2 sentences), Shipped This Week, In Progress, Blockers, Next Week.\n[INPUT]   "
+    }
+  ]
+}

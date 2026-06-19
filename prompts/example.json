@@ -1,0 +1,25 @@
+{
+  "prompts": [
+    {
+      "title": "Write Release Notes",
+      "tag": "Documentation",
+      "group": "Developer",
+      "desc": "Turn a list of git commits or ticket titles into polished release notes.",
+      "prompt": "[ROLE]    You are a software engineer writing user-facing release notes.\n[TASK]    Turn the commits or ticket titles below into clear, concise release notes.\n[STYLE]   Plain English. Group by type: New Features, Improvements, Bug Fixes. No technical jargon.\n[FORMAT]  Versioned release note sections with bullet points. Under 200 words total.\n[INPUT]   "
+    },
+    {
+      "title": "HR — Job Description",
+      "tag": "Hiring",
+      "group": "General",
+      "desc": "Write a clear, inclusive job description from a role brief.",
+      "prompt": "[ROLE]    You are a senior HR Business Partner.\n[TASK]    Write a job description for the role described below.\n[STYLE]   Clear, inclusive, and appealing. Avoid jargon and gendered language.\n[FORMAT]  Sections: About the Role, What You'll Do (5-6 bullets), What We're Looking For (5-6 bullets), Nice to Have (3 bullets).\n[INPUT]   "
+    },
+    {
+      "title": "Legal — Contract Summary",
+      "tag": "Review",
+      "group": "General",
+      "desc": "Summarise a contract or agreement into plain language key points.",
+      "prompt": "[ROLE]    You are a legal professional summarising contracts for non-legal stakeholders.\n[TASK]    Summarise the contract or agreement below into plain language key points.\n[STYLE]   Clear, objective, no legalese.\n[FORMAT]  Sections: Parties Involved, Key Obligations, Important Dates and Deadlines, Risks or Unusual Clauses, Recommended Actions.\n[INPUT]   "
+    }
+  ]
+}

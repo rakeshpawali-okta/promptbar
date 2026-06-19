@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Business Analyst prompt pack — 5 prompts for BAs and requirements professionals",
+  "prompts": [
+    {
+      "title": "Requirements Document",
+      "tag": "Documentation",
+      "group": "Business Analyst",
+      "desc": "Draft a structured requirements document from stakeholder notes.",
+      "prompt": "[ROLE]    You are a senior Business Analyst.\n[TASK]    Draft a requirements document based on the stakeholder input or meeting notes below.\n[STYLE]   Formal, precise, unambiguous.\n[FORMAT]  Sections: Business Objective, Scope, Functional Requirements (numbered), Non-Functional Requirements, Assumptions, Out of Scope.\n[INPUT]   "
+    },
+    {
+      "title": "Process Flow Summary",
+      "tag": "Analysis",
+      "group": "Business Analyst",
+      "desc": "Structure a business process from notes into a clear flow.",
+      "prompt": "[ROLE]    You are a senior Business Analyst.\n[TASK]    Summarise and structure the business process described below into a clear process flow.\n[STYLE]   Logical, step-by-step, easy to follow.\n[FORMAT]  Numbered process steps with decision points noted. Flag any gaps or ambiguities at the end.\n[INPUT]   "
+    },
+    {
+      "title": "Gap Analysis",
+      "tag": "Analysis",
+      "group": "Business Analyst",
+      "desc": "Identify gaps between current state and desired future state.",
+      "prompt": "[ROLE]    You are a senior Business Analyst.\n[TASK]    Perform a gap analysis based on the current and desired state described below.\n[STYLE]   Analytical, structured, neutral.\n[FORMAT]  Table with columns: Area, Current State, Desired State, Gap, Recommended Action.\n[INPUT]   "
+    },
+    {
+      "title": "Use Case Description",
+      "tag": "Documentation",
+      "group": "Business Analyst",
+      "desc": "Write a formal use case from a feature or scenario.",
+      "prompt": "[ROLE]    You are a senior Business Analyst.\n[TASK]    Write a formal use case description for the scenario below.\n[STYLE]   Precise and unambiguous.\n[FORMAT]  Sections: Use Case Name, Actor(s), Preconditions, Main Flow (numbered), Alternative Flows, Postconditions.\n[INPUT]   "
+    },
+    {
+      "title": "Business Case Summary",
+      "tag": "Strategy",
+      "group": "Business Analyst",
+      "desc": "Write a concise business case from project or initiative notes.",
+      "prompt": "[ROLE]    You are a senior Business Analyst.\n[TASK]    Write a concise business case for the initiative or project described below.\n[STYLE]   Professional, evidence-based, persuasive without being salesy.\n[FORMAT]  Sections: Executive Summary, Problem Statement, Proposed Solution, Expected Benefits, Risks, Recommendation.\n[INPUT]   "
+    }
+  ]
+}

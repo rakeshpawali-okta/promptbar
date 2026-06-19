@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Sales prompt pack — 4 prompts for account executives and sales professionals",
+  "prompts": [
+    {
+      "title": "Outbound Prospecting Email",
+      "tag": "Outbound",
+      "group": "Sales",
+      "desc": "Write a short personalised outbound email to a target prospect.",
+      "prompt": "[ROLE]    You are a senior Account Executive.\n[TASK]    Write a short outbound prospecting email (under 120 words) to the prospect described below.\n[STYLE]   Human, specific, not templated. Lead with a pain point. No exclamation marks.\n[FORMAT]  Subject line + email body. End with a single low-friction CTA.\n[INPUT]   "
+    },
+    {
+      "title": "Follow-up After Meeting",
+      "tag": "Follow-up",
+      "group": "Sales",
+      "desc": "Write a follow-up email summarising a sales meeting.",
+      "prompt": "[ROLE]    You are a senior Account Executive.\n[TASK]    Write a follow-up email after the sales meeting described below.\n[STYLE]   Professional, prompt, action-oriented. No fluff.\n[FORMAT]  Brief summary of discussion, agreed next steps with owners, clear CTA.\n[INPUT]   "
+    },
+    {
+      "title": "Objection Handling Response",
+      "tag": "Closing",
+      "group": "Sales",
+      "desc": "Draft a confident, empathetic response to a sales objection.",
+      "prompt": "[ROLE]    You are a senior Account Executive.\n[TASK]    Write a response to the sales objection below.\n[STYLE]   Empathetic, confident, not defensive. Acknowledge before reframing.\n[FORMAT]  3-4 sentences: acknowledge the concern, reframe with evidence, bridge to next step.\n[INPUT]   "
+    },
+    {
+      "title": "Deal Win/Loss Summary",
+      "tag": "Analysis",
+      "group": "Sales",
+      "desc": "Write an internal win/loss analysis for a closed deal.",
+      "prompt": "[ROLE]    You are a senior Account Executive writing an internal deal debrief.\n[TASK]    Write a win/loss summary for the deal described below.\n[STYLE]   Honest, analytical, no spin.\n[FORMAT]  Sections: Deal Overview, Why We Won/Lost, Key Decision Factors, Competitive Dynamics, Lessons Learned.\n[INPUT]   "
+    }
+  ]
+}

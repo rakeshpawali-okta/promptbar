@@ -1,0 +1,77 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Technical Account Management prompt pack — 10 prompts for TAMs",
+  "prompts": [
+    {
+      "title": "Customer Email Reply",
+      "tag": "Support",
+      "group": "Technical Account Management",
+      "desc": "Reply to a customer query as a TAM with a professional but friendly tone.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Reply to the customer email below. Address their concern clearly and provide next steps.\n[STYLE]   Professional but warm. No exclamation marks. No jargon.\n[FORMAT]  Return only the email reply, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Escalation to Engineering",
+      "tag": "Internal",
+      "group": "Technical Account Management",
+      "desc": "Write an internal escalation email to engineering for a customer issue.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write an internal escalation email to the engineering team for the customer issue below.\n[STYLE]   Direct, factual, urgent but not alarmist.\n[FORMAT]  Subject line + email body. Include: Customer Impact, Steps to Reproduce, Customer Sentiment, Requested SLA.\n[INPUT]   "
+    },
+    {
+      "title": "QBR Executive Summary",
+      "tag": "Customer Success",
+      "group": "Technical Account Management",
+      "desc": "Summarise account details into a QBR executive summary.",
+      "prompt": "[ROLE]    You are a Technical Account Manager preparing a Quarterly Business Review.\n[TASK]    Summarise the account details below into a QBR executive summary.\n[STYLE]   Executive-friendly. Confident. Focus on outcomes not activity.\n[FORMAT]  Bullet points under: Highlights, Risks, Upcoming Milestones, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      "title": "Post-Incident Customer Summary",
+      "tag": "Support",
+      "group": "Technical Account Management",
+      "desc": "Write a post-incident summary email to a customer after a service disruption.",
+      "prompt": "[ROLE]    You are a Technical Account Manager writing after a service incident.\n[TASK]    Write a post-incident summary email to send to the customer based on the outage details below.\n[STYLE]   Transparent, accountable, reassuring. No defensive language.\n[FORMAT]  Return only the email. Structure: What Happened, Customer Impact, Root Cause, What We Fixed, Next Steps.\n[INPUT]   "
+    },
+    {
+      "title": "Technical Error to Plain English",
+      "tag": "Support",
+      "group": "Technical Account Management",
+      "desc": "Translate a technical error or log into plain English for a non-technical customer.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Translate the technical error or log output below into plain English a non-technical customer can understand.\n[STYLE]   Clear, simple, no acronyms. Empathetic.\n[FORMAT]  2-3 sentences explaining what happened, followed by a suggested action for the customer.\n[INPUT]   "
+    },
+    {
+      "title": "Account Health Check Update",
+      "tag": "Internal",
+      "group": "Technical Account Management",
+      "desc": "Write an internal account health update from notes.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write an internal account health update based on the notes below.\n[STYLE]   Concise, honest, no spin.\n[FORMAT]  Bullet points under: Overall Health (Green/Amber/Red), Usage and Adoption, Open Risks, TAM Actions.\n[INPUT]   "
+    },
+    {
+      "title": "Renewal or Upsell Email",
+      "tag": "Sales",
+      "group": "Technical Account Management",
+      "desc": "Write a renewal or expansion email based on account context.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write a renewal or expansion email to the customer based on the account context below.\n[STYLE]   Consultative, not salesy. Lead with value and outcomes. No exclamation marks.\n[FORMAT]  Short email under 150 words. End with a soft CTA to schedule a call.\n[INPUT]   "
+    },
+    {
+      "title": "Thread or Email Chain Summary",
+      "tag": "Productivity",
+      "group": "Technical Account Management",
+      "desc": "Summarise a Slack thread or email chain into a concise briefing.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Summarise the conversation thread below into a concise briefing.\n[STYLE]   Neutral, factual.\n[FORMAT]  3 sections: Key Issue, Current Status, Open Actions (with owner if mentioned).\n[INPUT]   "
+    },
+    {
+      "title": "Feature Request to Product",
+      "tag": "Internal",
+      "group": "Technical Account Management",
+      "desc": "Write a structured feature request to the product team based on customer need.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write a structured feature request to submit to the product team based on the customer need below.\n[STYLE]   Objective, evidence-based. Frame around customer impact not preference.\n[FORMAT]  Include: Customer Problem, Current Workaround, Business Impact, Frequency (how many customers affected).\n[INPUT]   "
+    },
+    {
+      "title": "Meeting Notes and Actions",
+      "tag": "Productivity",
+      "group": "Technical Account Management",
+      "desc": "Extract structured meeting notes and action items from a transcript.",
+      "prompt": "[ROLE]    You are a Technical Account Manager.\n[TASK]    Extract structured meeting notes and action items from the transcript or rough notes below.\n[STYLE]   Concise. Use names for action owners where mentioned.\n[FORMAT]  Two sections: Summary (3-4 sentences) and Action Items (owner, task, due date if mentioned).\n[INPUT]   "
+    }
+  ]
+}

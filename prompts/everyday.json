@@ -1,0 +1,147 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Everyday prompt pack — 20 prompts for common tasks anyone uses regardless of role",
+  "prompts": [
+    {
+      "title": "Summarise",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Condense any text, document or article into clear key points.",
+      "prompt": "[ROLE]    You are a clear and concise communicator.\n[TASK]    Summarise the text below into the key points.\n[STYLE]   Neutral, factual. No padding or filler.\n[FORMAT]  One-sentence TL;DR at the top. Then 3-5 bullet points.\n[INPUT]   "
+    },
+    {
+      "title": "Improve Writing",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Make any text clearer, more professional, and easier to read.",
+      "prompt": "[ROLE]    You are a professional editor.\n[TASK]    Improve the writing below. Fix clarity, flow, and tone without changing the meaning or length significantly.\n[STYLE]   Professional but natural. Remove fluff and passive voice.\n[FORMAT]  Return only the improved version, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Proofread",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Fix all grammar, spelling, and punctuation errors.",
+      "prompt": "[ROLE]    You are a meticulous proofreader.\n[TASK]    Fix all grammar, spelling, punctuation, and capitalisation errors in the text below.\n[STYLE]   Preserve the author's voice and intended meaning exactly.\n[FORMAT]  Return only the corrected text. If there are no errors, say so in one line.\n[INPUT]   "
+    },
+    {
+      "title": "Make It Shorter",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Cut word count by at least 40% without losing the key message.",
+      "prompt": "[ROLE]    You are a professional editor.\n[TASK]    Rewrite the text below to be at least 40% shorter without losing any key information.\n[STYLE]   Clear, direct. Cut filler, repetition, and throat-clearing.\n[FORMAT]  Return only the shorter version, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Write an Email",
+      "tag": "Email",
+      "group": "Everyday",
+      "desc": "Compose a professional email from bullet points or a brief.",
+      "prompt": "[ROLE]    You are a professional business communicator.\n[TASK]    Write a professional email based on the notes or context below.\n[STYLE]   Clear, direct, and appropriately formal. No exclamation marks.\n[FORMAT]  Subject line + email body. Keep it under 150 words.\n[INPUT]   "
+    },
+    {
+      "title": "Reply to Email",
+      "tag": "Email",
+      "group": "Everyday",
+      "desc": "Draft a professional reply to any email.",
+      "prompt": "[ROLE]    You are a professional business communicator.\n[TASK]    Write a professional reply to the email below.\n[STYLE]   Match the tone of the original. Be direct and helpful.\n[FORMAT]  Return only the reply body, no subject line, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Extract Action Items",
+      "tag": "Productivity",
+      "group": "Everyday",
+      "desc": "Pull structured action items from meeting notes or a conversation.",
+      "prompt": "[ROLE]    You are an organised project coordinator.\n[TASK]    Extract all action items from the meeting notes or conversation below.\n[STYLE]   Factual, concise. Use names where mentioned.\n[FORMAT]  Numbered list. Each item: Owner — Action — Due date (if mentioned).\n[INPUT]   "
+    },
+    {
+      "title": "Create Meeting Agenda",
+      "tag": "Meetings",
+      "group": "Everyday",
+      "desc": "Build a structured, time-boxed agenda from a list of topics.",
+      "prompt": "[ROLE]    You are an efficient meeting facilitator.\n[TASK]    Create a structured meeting agenda from the topics and context below.\n[STYLE]   Clear, practical, time-conscious.\n[FORMAT]  Sections: Meeting Goal (1 sentence), Agenda items with owner and suggested time, Any pre-reads needed.\n[INPUT]   "
+    },
+    {
+      "title": "Plain English",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Remove jargon, acronyms, and corporate speak from any text.",
+      "prompt": "[ROLE]    You are a plain language editor.\n[TASK]    Rewrite the text below in plain English. Remove all jargon, acronyms, and corporate speak.\n[STYLE]   Simple and direct. Write as if explaining to a smart friend outside the industry.\n[FORMAT]  Return only the rewritten text, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Bullets to Prose",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Turn a list of bullet points into a flowing, coherent paragraph.",
+      "prompt": "[ROLE]    You are a professional writer.\n[TASK]    Turn the bullet points below into a well-structured, flowing paragraph or short passage.\n[STYLE]   Natural and coherent. Connect ideas logically with good transitions.\n[FORMAT]  Return only the prose version, no bullet points.\n[INPUT]   "
+    },
+    {
+      "title": "Pros and Cons",
+      "tag": "Analysis",
+      "group": "Everyday",
+      "desc": "Produce a balanced pros and cons analysis for any decision or topic.",
+      "prompt": "[ROLE]    You are an objective analyst.\n[TASK]    Produce a balanced pros and cons analysis for the decision or topic below.\n[STYLE]   Neutral and evidence-based. No recommendation unless explicitly asked.\n[FORMAT]  Pros (bullet list) then Cons (bullet list). One-sentence summary of the key tension at the end.\n[INPUT]   "
+    },
+    {
+      "title": "Polite Decline",
+      "tag": "Email",
+      "group": "Everyday",
+      "desc": "Write a professional, warm message declining a request or invitation.",
+      "prompt": "[ROLE]    You are a professional business communicator.\n[TASK]    Write a polite, professional message declining the request or invitation described below.\n[STYLE]   Warm but firm. No over-explaining or excessive apologising.\n[FORMAT]  3-4 sentences. Acknowledge, decline clearly, optionally offer an alternative.\n[INPUT]   "
+    },
+    {
+      "title": "Executive Summary",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Create a concise executive summary from a longer document or notes.",
+      "prompt": "[ROLE]    You are a senior business communicator.\n[TASK]    Write a concise executive summary of the document or notes below.\n[STYLE]   Clear and outcome-focused. Written for a time-poor senior reader. No jargon.\n[FORMAT]  Sections: Context (1-2 sentences), Key Findings (3-5 bullets), Recommendation or Next Steps.\n[INPUT]   "
+    },
+    {
+      "title": "Generate FAQ",
+      "tag": "Content",
+      "group": "Everyday",
+      "desc": "Create a FAQ from any content, documentation, or topic.",
+      "prompt": "[ROLE]    You are a technical communicator.\n[TASK]    Generate a FAQ based on the content or topic below. Anticipate what a reader would most want to know.\n[STYLE]   Clear and helpful. Write questions the way a real user would ask them.\n[FORMAT]  5-8 Q&A pairs. Questions in bold.\n[INPUT]   "
+    },
+    {
+      "title": "Make It Formal",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Rewrite casual or informal text in a professional tone.",
+      "prompt": "[ROLE]    You are a professional editor.\n[TASK]    Rewrite the text below in a formal, professional tone.\n[STYLE]   Professional and precise. No slang, contractions, or casual phrasing.\n[FORMAT]  Return only the rewritten version, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Make It Friendly",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Rewrite stiff or formal text to sound warmer and more approachable.",
+      "prompt": "[ROLE]    You are a professional editor.\n[TASK]    Rewrite the text below to sound warmer and more approachable while staying professional.\n[STYLE]   Conversational but polished. Use contractions where they sound natural.\n[FORMAT]  Return only the rewritten version, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Create Checklist",
+      "tag": "Productivity",
+      "group": "Everyday",
+      "desc": "Turn a process or set of instructions into a step-by-step checklist.",
+      "prompt": "[ROLE]    You are an organised process designer.\n[TASK]    Turn the process or instructions below into a clear, actionable checklist.\n[STYLE]   Simple and scannable. Each item starts with a verb.\n[FORMAT]  Numbered checklist. Group related items under sub-headings if needed.\n[INPUT]   "
+    },
+    {
+      "title": "Brainstorm Ideas",
+      "tag": "Thinking",
+      "group": "Everyday",
+      "desc": "Generate a diverse list of ideas on any topic or challenge.",
+      "prompt": "[ROLE]    You are a creative thinking partner.\n[TASK]    Generate a diverse list of ideas for the topic or challenge below. Prioritise variety and range over polish.\n[STYLE]   Open and generative. Include unexpected ideas alongside obvious ones.\n[FORMAT]  Numbered list of 10-15 ideas. One sentence per idea.\n[INPUT]   "
+    },
+    {
+      "title": "Explain Simply",
+      "tag": "Writing",
+      "group": "Everyday",
+      "desc": "Explain any concept in simple terms a non-expert can understand.",
+      "prompt": "[ROLE]    You are a teacher who excels at making complex topics simple.\n[TASK]    Explain the concept or topic below in simple terms for someone with no background in the subject.\n[STYLE]   Clear and engaging. Use analogies and real-world examples. No jargon.\n[FORMAT]  2-3 paragraphs. End with one concrete example.\n[INPUT]   "
+    },
+    {
+      "title": "Slack or Teams Message",
+      "tag": "Comms",
+      "group": "Everyday",
+      "desc": "Draft a clear, appropriately toned message for a team channel.",
+      "prompt": "[ROLE]    You are a clear and concise team communicator.\n[TASK]    Write a Slack or Teams message based on the context below.\n[STYLE]   Direct and clear. Match tone to the context — urgent, casual, or informational.\n[FORMAT]  Return only the message. Under 100 words. No unnecessary preamble.\n[INPUT]   "
+    }
+  ]
+}

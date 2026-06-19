@@ -1,0 +1,72 @@
+name: Validate Prompts
+
+on:
+  pull_request:
+    paths:
+      - 'prompts/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate JSON prompt files
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON syntax
+        run: |
+          echo "Checking JSON syntax..."
+          for file in prompts/*.json; do
+            echo "  → $file"
+            python3 -m json.tool "$file" > /dev/null || {
+              echo "❌ Invalid JSON in $file"
+              exit 1
+            }
+          done
+          echo "✅ All JSON files are valid"
+
+      - name: Check required fields
+        run: |
+          node -e "
+            const fs = require('fs');
+            const files = fs.readdirSync('prompts').filter(f => f.endsWith('.json'));
+            const required = ['title', 'tag', 'group', 'desc', 'prompt'];
+            const errors = [];
+
+            files.forEach(file => {
+              let data;
+              try {
+                data = JSON.parse(fs.readFileSync('prompts/' + file, 'utf8'));
+              } catch (e) {
+                errors.push(file + ': ' + e.message);
+                return;
+              }
+
+              const prompts = Array.isArray(data) ? data : (data.prompts || []);
+
+              if (!prompts.length) {
+                errors.push(file + ': no prompts array found');
+                return;
+              }
+
+              prompts.forEach((p, i) => {
+                required.forEach(field => {
+                  if (!p[field] || !p[field].toString().trim()) {
+                    errors.push(file + ' [' + i + ']: missing or empty field \"' + field + '\"');
+                  }
+                });
+
+                if (p.prompt && !p.prompt.trim().endsWith('[INPUT]   ')) {
+                  errors.push(file + ' [' + i + '] \"' + p.title + '\": prompt must end with [INPUT] followed by 3 spaces');
+                }
+              });
+            });
+
+            if (errors.length) {
+              console.error('\n❌ Validation failed:\n');
+              errors.forEach(e => console.error('  - ' + e));
+              process.exit(1);
+            }
+
+            console.log('✅ All ' + files.length + ' file(s) passed validation');
+          "

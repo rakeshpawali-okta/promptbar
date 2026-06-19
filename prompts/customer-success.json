@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Customer Success prompt pack — 4 prompts for CSMs and technical account managers",
+  "prompts": [
+    {
+      "title": "Customer Email Reply",
+      "tag": "Support",
+      "group": "Customer Success",
+      "desc": "Reply to a customer query with a warm, professional tone.",
+      "prompt": "[ROLE]    You are a Customer Success Manager.\n[TASK]    Reply to the customer email below. Address their concern and provide clear next steps.\n[STYLE]   Professional but warm. No exclamation marks. No jargon.\n[FORMAT]  Return only the email reply, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "QBR Executive Summary",
+      "tag": "Customer Success",
+      "group": "Customer Success",
+      "desc": "Summarise account details into a QBR executive summary.",
+      "prompt": "[ROLE]    You are a Customer Success Manager preparing a Quarterly Business Review.\n[TASK]    Summarise the account details below into a QBR executive summary.\n[STYLE]   Executive-friendly. Focus on outcomes and value delivered, not activity.\n[FORMAT]  Bullet points under: Highlights, Risks, Upcoming Milestones, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      "title": "Account Health Update",
+      "tag": "Internal",
+      "group": "Customer Success",
+      "desc": "Write an internal account health update from notes.",
+      "prompt": "[ROLE]    You are a Customer Success Manager.\n[TASK]    Write an internal account health update based on the notes below.\n[STYLE]   Concise, honest, no spin.\n[FORMAT]  Bullet points under: Overall Health (Green/Amber/Red), Usage and Adoption, Open Risks, CSM Actions.\n[INPUT]   "
+    },
+    {
+      "title": "Post-Incident Customer Email",
+      "tag": "Support",
+      "group": "Customer Success",
+      "desc": "Write a post-incident summary email to a customer after a service disruption.",
+      "prompt": "[ROLE]    You are a Customer Success Manager writing after a service incident.\n[TASK]    Write a post-incident email based on the details below.\n[STYLE]   Transparent, accountable, reassuring. No defensive language.\n[FORMAT]  Return only the email. Structure: What Happened, Customer Impact, Root Cause, What We Fixed, Next Steps.\n[INPUT]   "
+    }
+  ]
+}

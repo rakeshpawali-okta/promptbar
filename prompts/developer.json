@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Developer prompt pack — 5 prompts for software engineers",
+  "prompts": [
+    {
+      "title": "Code Review",
+      "tag": "Code Quality",
+      "group": "Developer",
+      "desc": "Review code for bugs, security issues, and best practices.",
+      "prompt": "[ROLE]    You are a senior software engineer.\n[TASK]    Review the code below. Identify bugs, performance issues, security vulnerabilities, and deviations from best practices.\n[STYLE]   Direct and constructive. Reference specific lines where possible.\n[FORMAT]  Sections: Critical Issues, Warnings, Suggestions. Use bullet points.\n[INPUT]   "
+    },
+    {
+      "title": "Write Unit Tests",
+      "tag": "Testing",
+      "group": "Developer",
+      "desc": "Generate comprehensive unit tests covering edge cases.",
+      "prompt": "[ROLE]    You are a senior software engineer specialising in test-driven development.\n[TASK]    Write comprehensive unit tests for the code below. Cover happy paths, edge cases, and error handling.\n[STYLE]   Clean, well-structured. Use the same language and testing framework as the input.\n[FORMAT]  Return only the test code, no commentary.\n[INPUT]   "
+    },
+    {
+      "title": "Debug Error Message",
+      "tag": "Debugging",
+      "group": "Developer",
+      "desc": "Diagnose an error or stack trace and suggest a fix.",
+      "prompt": "[ROLE]    You are a senior software engineer and debugger.\n[TASK]    Diagnose the error message or stack trace below. Explain the root cause and provide step-by-step fix instructions.\n[STYLE]   Clear and precise. Assume the reader is an intermediate developer.\n[FORMAT]  Sections: Root Cause, Why It Happened, How to Fix, How to Prevent.\n[INPUT]   "
+    },
+    {
+      "title": "Explain Code Simply",
+      "tag": "Communication",
+      "group": "Developer",
+      "desc": "Translate code or technical concepts into plain language.",
+      "prompt": "[ROLE]    You are a software engineer who excels at clear communication.\n[TASK]    Explain what the code or technical concept below does in plain language for a non-technical audience.\n[STYLE]   Simple, jargon-free. Use analogies where helpful.\n[FORMAT]  2-3 paragraph explanation. No code blocks.\n[INPUT]   "
+    },
+    {
+      "title": "Write API Documentation",
+      "tag": "Documentation",
+      "group": "Developer",
+      "desc": "Generate clear API docs from code or a spec.",
+      "prompt": "[ROLE]    You are a technical writer with software engineering expertise.\n[TASK]    Write clear API documentation for the endpoint or function below.\n[STYLE]   Precise and developer-friendly. Include examples.\n[FORMAT]  Sections: Overview, Parameters, Request Example, Response Example, Error Codes.\n[INPUT]   "
+    }
+  ]
+}

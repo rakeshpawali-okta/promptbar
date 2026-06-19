@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptBar — AI Prompt Library</title>
+
+  <meta name="description" content="A zero-install AI prompt library for Gemini, ChatGPT and Claude. No extensions required. Your prompts stay local.">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="PromptBar — AI Prompt Library">
+  <meta property="og:description" content="A zero-install prompt library for Gemini, ChatGPT and Claude. No browser extension needed. Works even when extensions are blocked.">
+  <meta property="og:image"       content="/og.svg">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="PromptBar — AI Prompt Library">
+  <meta name="twitter:description" content="A zero-install prompt library for Gemini, ChatGPT and Claude. No browser extension needed.">
+  <meta name="twitter:image"       content="/og.svg">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    :root {
+      --primary: #EB5424;
+      --primary-hover: #d44a1e;
+      --dark: #1B1B1B;
+      --text: #2c2c2c;
+      --text-secondary: #6b7280;
+      --bg: #F4F4F4;
+      --border: #e2e2e2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--dark);
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo { display: flex; align-items: center; gap: 10px; }
+
+    .logo-icon {
+      width: 30px; height: 30px;
+      background: var(--primary);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .logo-icon svg { width: 16px; height: 16px; }
+
+    .logo-name {
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .logo-tag {
+      color: #6b7280;
+      font-size: 13px;
+      margin-left: 4px;
+      font-weight: 400;
+    }
+
+    .header-badge {
+      font-size: 11px;
+      color: #9ca3af;
+      background: #1f2937;
+      border: 1px solid #374151;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Main ── */
+    main { max-width: 980px; margin: 0 auto; padding: 40px 24px 72px; }
+
+    /* ── Setup Banner ── */
+    .setup-banner {
+      background: white;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+    }
+
+    .setup-title {
+      font-size: 11px; font-weight: 700; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px;
+    }
+
+    .setup-steps { display: flex; gap: 0; }
+
+    .step {
+      display: flex; align-items: flex-start; gap: 10px;
+      flex: 1; padding-right: 24px;
+      border-right: 1px solid var(--border); margin-right: 24px;
+    }
+
+    .step:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+
+    .step-num {
+      background: var(--primary); color: white;
+      font-size: 11px; font-weight: 700;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    .step p { font-size: 13px; color: var(--text-secondary); }
+    .step p strong { color: var(--text); }
+
+    /* ── Search ── */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-wrap svg.search-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 15px; height: 15px;
+      color: var(--text-secondary); pointer-events: none;
+    }
+
+    #search-input {
+      width: 100%; padding: 10px 36px 10px 36px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 13px; background: white; outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    #search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(235,84,36,.08);
+    }
+
+    #search-input::placeholder { color: #9ca3af; }
+
+    #search-clear {
+      position: absolute; right: 10px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--text-secondary); font-size: 16px; line-height: 1;
+      display: none; align-items: center; padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    #search-clear:hover { color: var(--text); }
+
+    .search-results-label {
+      font-size: 12px; color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .tab-count {
+      font-size: 10px; font-weight: 600;
+      opacity: 0.65; margin-left: 3px;
+    }
+
+    .tab.active .tab-count { opacity: 0.85; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex; gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer; white-space: nowrap;
+      transition: all 0.15s; font-family: inherit;
+    }
+
+    .tab:hover { border-color: var(--primary); color: var(--primary); }
+
+    .tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* ── Section header ── */
+    .section-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .section-title { font-size: 16px; font-weight: 600; color: var(--dark); }
+
+    .section-count {
+      font-size: 12px; color: var(--text-secondary);
+      background: white; border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 20px;
+    }
+
+    /* ── Template Grid ── */
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 14px;
+      margin-bottom: 0;
+    }
+
+    .template-card {
+      background: white; border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px;
+      transition: box-shadow 0.15s, border-color 0.15s;
+      display: flex; flex-direction: column;
+    }
+
+    .template-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.06); border-color: #d1d5db; }
+
+    .card-clickable { cursor: pointer; }
+
+    .card-top {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 8px; margin-bottom: 5px;
+    }
+
+    .card-title { font-size: 14px; font-weight: 600; color: var(--dark); transition: color 0.15s; }
+    .card-clickable:hover .card-title { color: var(--primary); }
+
+    .card-tag {
+      font-size: 11px; font-weight: 500;
+      padding: 3px 8px; border-radius: 20px;
+      background: #FEF0EB; color: var(--primary); flex-shrink: 0;
+    }
+
+    .card-tag-custom { background: #F0FDF4; color: #16a34a; }
+
+    .card-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 0; }
+
+    .expand-hint {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--text-secondary);
+      margin-top: 8px; user-select: none;
+    }
+
+    .expand-hint svg { width: 12px; height: 12px; transition: transform 0.2s; flex-shrink: 0; }
+    .card-clickable:hover .expand-hint { color: var(--primary); }
+
+    .prompt-preview {
+      display: none; margin: 10px 0 12px;
+      padding: 12px 14px;
+      background: #F9FAFB; border: 1px solid var(--border);
+      border-radius: 6px; font-size: 11.5px;
+      font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+      white-space: pre-wrap; word-break: break-word;
+      color: var(--text); line-height: 1.7;
+    }
+
+    .prompt-preview.open { display: block; }
+
+    .card-footer {
+      display: flex; align-items: center;
+      gap: 7px; padding-top: 12px;
+      border-top: 1px solid var(--border); margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .bookmark-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--dark); color: white;
+      padding: 7px 12px; border-radius: 6px;
+      font-size: 12px; font-weight: 500;
+      text-decoration: none; cursor: grab;
+      transition: background 0.15s; user-select: none; white-space: nowrap;
+    }
+
+    .bookmark-btn:hover { background: var(--primary); }
+    .bookmark-btn:active { cursor: grabbing; }
+    .bookmark-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    .copy-btn, .edit-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-secondary); padding: 7px 11px;
+      border-radius: 6px; font-size: 12px; cursor: pointer;
+      font-family: inherit; transition: border-color 0.15s, color 0.15s;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+
+    .copy-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .copy-btn svg, .edit-btn svg { width: 12px; height: 12px; }
+
+    .edit-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+
+    .delete-btn {
+      background: none; border: 1px solid var(--border);
+      color: #d1d5db; padding: 7px 9px; border-radius: 6px;
+      cursor: pointer; display: inline-flex; align-items: center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .delete-btn:hover { border-color: #ef4444; color: #ef4444; }
+    .delete-btn svg { width: 13px; height: 13px; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center; padding: 32px 20px;
+      color: var(--text-secondary); font-size: 13px;
+      background: white; border: 1px dashed var(--border);
+      border-radius: 10px;
+    }
+
+    /* ── My Templates header ── */
+    .my-templates-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+    }
+
+    .my-templates-header-left { display: flex; align-items: center; gap: 10px; }
+
+    .import-export-btns { display: flex; gap: 8px; }
+
+    .import-btn, .export-btn {
+      font-size: 12px; font-weight: 500; padding: 7px 14px;
+      border-radius: 6px; cursor: pointer; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .import-btn {
+      background: white; border: 1px solid var(--border); color: var(--text-secondary);
+    }
+
+    .import-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    .export-btn {
+      background: var(--primary); border: 1px solid var(--primary); color: white;
+    }
+
+    .export-btn:hover { background: var(--primary-hover); }
+
+    .import-btn svg, .export-btn svg { width: 13px; height: 13px; }
+
+    /* ── Small category-level buttons ── */
+    .cat-btn {
+      font-size: 11px; font-weight: 500; padding: 5px 10px;
+      border-radius: 5px; cursor: pointer; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: white; border: 1px solid var(--border);
+      color: var(--text-secondary); transition: all 0.15s;
+    }
+
+    .cat-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .cat-btn svg { width: 11px; height: 11px; }
+
+    /* ── Divider ── */
+    .section-divider {
+      display: flex; align-items: center; gap: 16px; margin: 48px 0 32px;
+    }
+
+    .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+
+    .section-divider-label {
+      font-size: 11px; font-weight: 700; color: var(--text-secondary);
+      letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap;
+    }
+
+    /* ── Add Your Own ── */
+    .add-section {
+      background: white; border: 1px solid var(--border);
+      border-radius: 10px; padding: 28px;
+    }
+
+    .add-section-header {
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-bottom: 24px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .add-icon {
+      width: 38px; height: 38px; background: #FEF0EB;
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+
+    .add-icon svg { width: 18px; height: 18px; color: var(--primary); }
+
+    .add-section-header h2 { font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 3px; }
+    .add-section-header p { font-size: 13px; color: var(--text-secondary); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    label { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.2px; }
+
+    input, textarea, select {
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 9px 12px; font-size: 13px; font-family: inherit;
+      color: var(--text); background: white;
+      transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(235,84,36,.08);
+    }
+
+    textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+
+    .form-actions { display: flex; align-items: center; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+
+    .save-btn {
+      background: var(--primary); color: white; border: none;
+      padding: 9px 20px; border-radius: 6px; font-size: 13px;
+      font-weight: 500; cursor: pointer; font-family: inherit;
+      transition: background 0.15s; display: inline-flex; align-items: center; gap: 7px;
+    }
+
+    .save-btn:hover { background: var(--primary-hover); }
+    .save-btn svg { width: 14px; height: 14px; }
+
+    .cancel-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-secondary); padding: 9px 16px;
+      border-radius: 6px; font-size: 13px; cursor: pointer;
+      font-family: inherit; transition: all 0.15s;
+    }
+
+    .cancel-btn:hover { border-color: #ef4444; color: #ef4444; }
+
+    .form-hint { font-size: 12px; color: var(--text-secondary); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: var(--dark); color: white;
+      padding: 12px 18px; border-radius: 8px;
+      font-size: 13px; font-weight: 500;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+      border-left: 3px solid var(--primary);
+      animation: slideIn 0.2s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(8px); opacity: 0; }
+      to   { transform: translateY(0);   opacity: 1; }
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; padding: 28px 24px;
+      font-size: 11px; color: #9ca3af;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Library hint ── */
+    .library-hint {
+      background: white; border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px; padding: 16px;
+      margin-bottom: 20px; font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .library-hint > strong { display: block; margin-bottom: 12px; }
+
+    .library-hint-options {
+      display: flex; align-items: flex-start; gap: 0;
+    }
+
+    .library-hint-option {
+      display: flex; gap: 10px; flex: 1;
+    }
+
+    .hint-option-icon {
+      width: 28px; height: 28px; flex-shrink: 0;
+      background: #FEF0EB; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+
+    .hint-option-icon svg { width: 13px; height: 13px; color: var(--primary); }
+
+    .library-hint-option p { margin: 3px 0 6px; line-height: 1.6; }
+
+    .hint-code {
+      padding: 6px 9px; background: #F9FAFB;
+      border: 1px solid var(--border); border-radius: 5px;
+      font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+      font-size: 10.5px; color: var(--text); line-height: 1.6;
+      margin-bottom: 8px; word-break: break-all;
+    }
+
+    .hint-link {
+      color: var(--primary); font-weight: 600;
+      text-decoration: none; font-size: 12px;
+    }
+
+    .hint-link:hover { text-decoration: underline; }
+
+    .library-hint-divider {
+      font-size: 11px; font-weight: 600; color: #d1d5db;
+      padding: 0 16px; padding-top: 4px;
+      flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      header { padding: 0 16px; }
+      main { padding: 24px 16px 64px; }
+
+      /* Setup steps stack vertically */
+      .setup-steps { flex-direction: column; gap: 12px; }
+      .step { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+      .step:last-child { border-bottom: none; padding-bottom: 0; }
+
+      /* Hint stacks vertically */
+      .library-hint-options { flex-direction: column; gap: 14px; }
+      .library-hint-divider { padding: 0; text-align: center; }
+      .hint-code { font-size: 10px; }
+
+      /* Templates single column */
+      .templates-grid { grid-template-columns: 1fr; }
+
+      /* Section headers wrap */
+      .section-header { flex-wrap: wrap; gap: 8px; }
+
+      /* Card footer wraps */
+      .card-footer { flex-wrap: wrap; }
+
+      /* My Templates header stacks */
+      .my-templates-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .import-export-btns { width: 100%; }
+      .import-export-btns .import-btn,
+      .import-export-btns .export-btn { flex: 1; justify-content: center; }
+
+      /* Form rows stack */
+      .form-row { grid-template-columns: 1fr; }
+
+      /* Form actions wrap */
+      .form-actions { flex-wrap: wrap; }
+    }
+
+    /* Bookmarks bar doesn't exist on touch devices — hide drag button, promote copy */
+    @media (hover: none) and (pointer: coarse) {
+      .bookmark-btn { display: none; }
+      .copy-btn {
+        background: var(--dark); color: white;
+        border-color: var(--dark); padding: 7px 16px;
+      }
+      .copy-btn:hover { background: var(--primary); border-color: var(--primary); }
+      .setup-banner { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+    </div>
+    <span class="logo-name">PromptBar<span class="logo-tag">AI Prompt Library</span></span>
+  </div>
+  <span class="header-badge">No Extensions Required</span>
+</header>
+
+<main>
+
+  <!-- Hero intro -->
+  <div style="margin-bottom:28px;">
+    <h1 style="font-size:22px; font-weight:700; color:var(--dark); margin-bottom:8px; letter-spacing:-0.3px;">Your AI Prompt Library</h1>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; max-width:560px; margin-bottom:14px;">
+      Built for organisations where Chrome extensions are blocked. One click injects any prompt into Gemini, ChatGPT or Claude — no install, no server, no account.
+    </p>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+      <span style="font-size:12px; font-weight:500; padding:5px 12px; border-radius:20px; background:#FEF0EB; color:var(--primary);">No Chrome extension</span>
+      <span style="font-size:12px; font-weight:500; padding:5px 12px; border-radius:20px; background:#FEF0EB; color:var(--primary);">No account needed</span>
+      <span style="font-size:12px; font-weight:500; padding:5px 12px; border-radius:20px; background:#FEF0EB; color:var(--primary);">Everything stays local</span>
+      <span style="font-size:12px; font-weight:500; padding:5px 12px; border-radius:20px; background:#FEF0EB; color:var(--primary);">No IT approval required</span>
+    </div>
+    <p style="font-size:12px; color:var(--text-secondary);">
+      Built by <strong style="color:var(--dark);">Rakesh Pawali</strong> &nbsp;·&nbsp; <span style="color:var(--primary); font-weight:500;">57 prompts across 8 personas</span>
+    </p>
+  </div>
+
+  <!-- Setup -->
+  <div class="setup-banner">
+    <div class="setup-title">One-time Setup</div>
+    <div class="setup-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <p>Show your <strong>bookmarks bar</strong> — press <strong>⌘⇧B</strong> (Mac) or <strong>Ctrl+Shift+B</strong> (Windows)</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p><strong>Drag any template</strong> button to your bookmarks bar</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p>Open Gemini or ChatGPT, <strong>click the text box</strong>, then click your bookmark</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Library hint -->
+  <div class="library-hint">
+    <strong style="color:var(--text); font-size:13px;">Add prompts to your library</strong>
+    <div class="library-hint-options">
+      <div class="library-hint-option">
+        <div class="hint-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div>
+          <strong style="color:var(--text); font-size:12px;">Import a pack</strong>
+          <p>Create a <code>.json</code> file and import it via <strong>My Templates → Import Category</strong>.</p>
+          <div class="hint-code">{ "prompts": [ { <span style="color:#7c3aed">"title"</span>: "…", <span style="color:#7c3aed">"tag"</span>: "…", <span style="color:#7c3aed">"group"</span>: "…", <span style="color:#7c3aed">"desc"</span>: "…", <span style="color:#7c3aed">"prompt"</span>: "…" } ] }</div>
+          <a href="prompts/example.json" target="_blank" rel="noopener" class="hint-link">View sample.json ↗</a>
+        </div>
+      </div>
+      <div class="library-hint-divider">or</div>
+      <div class="library-hint-option">
+        <div class="hint-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <div>
+          <strong style="color:var(--text); font-size:12px;">Create your own</strong>
+          <p>Use the form at the bottom of this page to write and save prompts directly.</p>
+          <a href="#create-own" class="hint-link" onclick="document.querySelector('.add-section').scrollIntoView({behavior:'smooth'});return false;">Go to form ↓</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="search-input" placeholder="Search prompts… (⌘K)" oninput="handleSearch(this.value)">
+    <button id="search-clear" onclick="clearSearch()" title="Clear search">✕</button>
+  </div>
+
+  <!-- Persona tabs -->
+  <div class="tabs" id="persona-tabs"></div>
+
+  <!-- Built-in templates -->
+  <div id="templates-container" style="margin-bottom: 48px;"></div>
+
+  <!-- My Templates -->
+  <div id="my-templates-section">
+    <div class="my-templates-header">
+      <div class="my-templates-header-left">
+        <h2 class="section-title">My Templates</h2>
+        <span class="section-count" id="my-template-count">0 saved</span>
+      </div>
+      <div class="import-export-btns">
+        <button class="import-btn" onclick="document.getElementById('import-new-cat').click()" title="Import a new category from a JSON file">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Import Category
+        </button>
+        <button class="export-btn" onclick="exportAllCustom()" title="Export all saved prompts as JSON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export All
+        </button>
+        <input type="file" id="import-new-cat" accept=".json" style="display:none" onchange="importNewCategory(this)">
+      </div>
+    </div>
+    <div style="margin-bottom:14px; padding:12px 14px; background:#F9FAFB; border:1px solid var(--border); border-radius:8px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
+      <strong style="color:var(--text);">Import format</strong> — any <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">.json</code> file with a <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">prompts</code> array.
+      Each prompt needs: <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">title</code>, <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">tag</code>, <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">group</code>, <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">desc</code>, <code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;">prompt</code>.
+      &nbsp;<a href="prompts/example.json" download style="color:var(--primary);text-decoration:none;font-weight:500;">Download example.json</a>
+    </div>
+    <div id="my-templates-grid"></div>
+  </div>
+
+  <!-- Divider -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <span class="section-divider-label">Create Your Own</span>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- Add Your Own -->
+  <div class="add-section">
+    <div class="add-section-header">
+      <div class="add-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Add Your Own Prompt</h2>
+        <p>Fill in the details below. Your prompt will be saved to this page automatically.</p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="prompt-name">Prompt Name</label>
+        <input type="text" id="prompt-name" placeholder="e.g. Write Release Notes">
+      </div>
+      <div class="form-group">
+        <label for="prompt-tag">Category</label>
+        <input type="text" id="prompt-tag" placeholder="e.g. Documentation, Comms">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="prompt-persona">Persona</label>
+        <select id="prompt-persona">
+          <option value="Everyday">Everyday</option>
+          <option value="Developer">Developer</option>
+          <option value="Product Owner">Product Owner</option>
+          <option value="Business Analyst">Business Analyst</option>
+          <option value="Sales">Sales</option>
+          <option value="Customer Success">Customer Success</option>
+          <option value="Technical Account Management">Technical Account Management</option>
+          <option value="Marketing">Marketing</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom: 20px;">
+      <label for="prompt-text">Prompt Text</label>
+      <textarea id="prompt-text" placeholder="[ROLE]    You are a...&#10;[TASK]    Write / summarise / review...&#10;[STYLE]   Professional but clear. No exclamation marks.&#10;[FORMAT]  Return only the output, no commentary.&#10;[INPUT]   "></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button class="save-btn" id="save-btn" onclick="savePrompt()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span id="save-btn-label">Save Prompt</span>
+      </button>
+      <button class="cancel-btn" id="cancel-edit-btn" onclick="cancelEdit()" style="display:none">Cancel</button>
+      <span class="form-hint" id="form-hint">Saved prompts appear in My Templates above</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>PromptBar &nbsp;·&nbsp; AI Prompt Library &nbsp;·&nbsp; No extensions required &nbsp;·&nbsp; Your prompts stay local &nbsp;·&nbsp; Built by <strong style="color:#888;">Rakesh Pawali</strong></footer>
+
+<script>
+  // ── Built-in Templates ────────────────────────────────────────────
+  const TEMPLATES = [
+    // Everyday
+    {
+      title: "Summarise",
+      tag: "Writing", group: "Everyday",
+      desc: "Condense any text, document or article into clear key points.",
+      prompt: "[ROLE]    You are a clear and concise communicator.\n[TASK]    Summarise the text below into the key points.\n[STYLE]   Neutral, factual. No padding or filler.\n[FORMAT]  One-sentence TL;DR at the top. Then 3-5 bullet points.\n[INPUT]   "
+    },
+    {
+      title: "Improve Writing",
+      tag: "Writing", group: "Everyday",
+      desc: "Make any text clearer, more professional, and easier to read.",
+      prompt: "[ROLE]    You are a professional editor.\n[TASK]    Improve the writing below. Fix clarity, flow, and tone without changing the meaning or length significantly.\n[STYLE]   Professional but natural. Remove fluff and passive voice.\n[FORMAT]  Return only the improved version, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Proofread",
+      tag: "Writing", group: "Everyday",
+      desc: "Fix all grammar, spelling, and punctuation errors.",
+      prompt: "[ROLE]    You are a meticulous proofreader.\n[TASK]    Fix all grammar, spelling, punctuation, and capitalisation errors in the text below.\n[STYLE]   Preserve the author's voice and intended meaning exactly.\n[FORMAT]  Return only the corrected text. If there are no errors, say so in one line.\n[INPUT]   "
+    },
+    {
+      title: "Make It Shorter",
+      tag: "Writing", group: "Everyday",
+      desc: "Cut word count by at least 40% without losing the key message.",
+      prompt: "[ROLE]    You are a professional editor.\n[TASK]    Rewrite the text below to be at least 40% shorter without losing any key information.\n[STYLE]   Clear, direct. Cut filler, repetition, and throat-clearing.\n[FORMAT]  Return only the shorter version, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Write an Email",
+      tag: "Email", group: "Everyday",
+      desc: "Compose a professional email from bullet points or a brief.",
+      prompt: "[ROLE]    You are a professional business communicator.\n[TASK]    Write a professional email based on the notes or context below.\n[STYLE]   Clear, direct, and appropriately formal. No exclamation marks.\n[FORMAT]  Subject line + email body. Keep it under 150 words.\n[INPUT]   "
+    },
+    {
+      title: "Reply to Email",
+      tag: "Email", group: "Everyday",
+      desc: "Draft a professional reply to any email.",
+      prompt: "[ROLE]    You are a professional business communicator.\n[TASK]    Write a professional reply to the email below.\n[STYLE]   Match the tone of the original. Be direct and helpful.\n[FORMAT]  Return only the reply body, no subject line, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Extract Action Items",
+      tag: "Productivity", group: "Everyday",
+      desc: "Pull structured action items from meeting notes or a conversation.",
+      prompt: "[ROLE]    You are an organised project coordinator.\n[TASK]    Extract all action items from the meeting notes or conversation below.\n[STYLE]   Factual, concise. Use names where mentioned.\n[FORMAT]  Numbered list. Each item: Owner — Action — Due date (if mentioned).\n[INPUT]   "
+    },
+    {
+      title: "Create Meeting Agenda",
+      tag: "Meetings", group: "Everyday",
+      desc: "Build a structured, time-boxed agenda from a list of topics.",
+      prompt: "[ROLE]    You are an efficient meeting facilitator.\n[TASK]    Create a structured meeting agenda from the topics and context below.\n[STYLE]   Clear, practical, time-conscious.\n[FORMAT]  Sections: Meeting Goal (1 sentence), Agenda items with owner and suggested time, Any pre-reads needed.\n[INPUT]   "
+    },
+    {
+      title: "Plain English",
+      tag: "Writing", group: "Everyday",
+      desc: "Remove jargon, acronyms, and corporate speak from any text.",
+      prompt: "[ROLE]    You are a plain language editor.\n[TASK]    Rewrite the text below in plain English. Remove all jargon, acronyms, and corporate speak.\n[STYLE]   Simple and direct. Write as if explaining to a smart friend outside the industry.\n[FORMAT]  Return only the rewritten text, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Bullets to Prose",
+      tag: "Writing", group: "Everyday",
+      desc: "Turn a list of bullet points into a flowing, coherent paragraph.",
+      prompt: "[ROLE]    You are a professional writer.\n[TASK]    Turn the bullet points below into a well-structured, flowing paragraph or short passage.\n[STYLE]   Natural and coherent. Connect ideas logically with good transitions.\n[FORMAT]  Return only the prose version, no bullet points.\n[INPUT]   "
+    },
+    {
+      title: "Pros and Cons",
+      tag: "Analysis", group: "Everyday",
+      desc: "Produce a balanced pros and cons analysis for any decision or topic.",
+      prompt: "[ROLE]    You are an objective analyst.\n[TASK]    Produce a balanced pros and cons analysis for the decision or topic below.\n[STYLE]   Neutral and evidence-based. No recommendation unless explicitly asked.\n[FORMAT]  Pros (bullet list) then Cons (bullet list). One-sentence summary of the key tension at the end.\n[INPUT]   "
+    },
+    {
+      title: "Polite Decline",
+      tag: "Email", group: "Everyday",
+      desc: "Write a professional, warm message declining a request or invitation.",
+      prompt: "[ROLE]    You are a professional business communicator.\n[TASK]    Write a polite, professional message declining the request or invitation described below.\n[STYLE]   Warm but firm. No over-explaining or excessive apologising.\n[FORMAT]  3-4 sentences. Acknowledge, decline clearly, optionally offer an alternative.\n[INPUT]   "
+    },
+    {
+      title: "Executive Summary",
+      tag: "Writing", group: "Everyday",
+      desc: "Create a concise executive summary from a longer document or notes.",
+      prompt: "[ROLE]    You are a senior business communicator.\n[TASK]    Write a concise executive summary of the document or notes below.\n[STYLE]   Clear and outcome-focused. Written for a time-poor senior reader. No jargon.\n[FORMAT]  Sections: Context (1-2 sentences), Key Findings (3-5 bullets), Recommendation or Next Steps.\n[INPUT]   "
+    },
+    {
+      title: "Generate FAQ",
+      tag: "Content", group: "Everyday",
+      desc: "Create a FAQ from any content, documentation, or topic.",
+      prompt: "[ROLE]    You are a technical communicator.\n[TASK]    Generate a FAQ based on the content or topic below. Anticipate what a reader would most want to know.\n[STYLE]   Clear and helpful. Write questions the way a real user would ask them.\n[FORMAT]  5-8 Q&A pairs. Questions in bold.\n[INPUT]   "
+    },
+    {
+      title: "Make It Formal",
+      tag: "Writing", group: "Everyday",
+      desc: "Rewrite casual or informal text in a professional tone.",
+      prompt: "[ROLE]    You are a professional editor.\n[TASK]    Rewrite the text below in a formal, professional tone.\n[STYLE]   Professional and precise. No slang, contractions, or casual phrasing.\n[FORMAT]  Return only the rewritten version, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Make It Friendly",
+      tag: "Writing", group: "Everyday",
+      desc: "Rewrite stiff or formal text to sound warmer and more approachable.",
+      prompt: "[ROLE]    You are a professional editor.\n[TASK]    Rewrite the text below to sound warmer and more approachable while staying professional.\n[STYLE]   Conversational but polished. Use contractions where they sound natural.\n[FORMAT]  Return only the rewritten version, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Create Checklist",
+      tag: "Productivity", group: "Everyday",
+      desc: "Turn a process or set of instructions into a step-by-step checklist.",
+      prompt: "[ROLE]    You are an organised process designer.\n[TASK]    Turn the process or instructions below into a clear, actionable checklist.\n[STYLE]   Simple and scannable. Each item starts with a verb.\n[FORMAT]  Numbered checklist. Group related items under sub-headings if needed.\n[INPUT]   "
+    },
+    {
+      title: "Brainstorm Ideas",
+      tag: "Thinking", group: "Everyday",
+      desc: "Generate a diverse list of ideas on any topic or challenge.",
+      prompt: "[ROLE]    You are a creative thinking partner.\n[TASK]    Generate a diverse list of ideas for the topic or challenge below. Prioritise variety and range over polish.\n[STYLE]   Open and generative. Include unexpected ideas alongside obvious ones.\n[FORMAT]  Numbered list of 10-15 ideas. One sentence per idea.\n[INPUT]   "
+    },
+    {
+      title: "Explain Simply",
+      tag: "Writing", group: "Everyday",
+      desc: "Explain any concept in simple terms a non-expert can understand.",
+      prompt: "[ROLE]    You are a teacher who excels at making complex topics simple.\n[TASK]    Explain the concept or topic below in simple terms for someone with no background in the subject.\n[STYLE]   Clear and engaging. Use analogies and real-world examples. No jargon.\n[FORMAT]  2-3 paragraphs. End with one concrete example.\n[INPUT]   "
+    },
+    {
+      title: "Slack or Teams Message",
+      tag: "Comms", group: "Everyday",
+      desc: "Draft a clear, appropriately toned message for a team channel.",
+      prompt: "[ROLE]    You are a clear and concise team communicator.\n[TASK]    Write a Slack or Teams message based on the context below.\n[STYLE]   Direct and clear. Match tone to the context — urgent, casual, or informational.\n[FORMAT]  Return only the message. Under 100 words. No unnecessary preamble.\n[INPUT]   "
+    },
+    // Developer
+    {
+      title: "Code Review",
+      tag: "Code Quality", group: "Developer",
+      desc: "Review code for bugs, security issues, and best practices.",
+      prompt: "[ROLE]    You are a senior software engineer.\n[TASK]    Review the code below. Identify bugs, performance issues, security vulnerabilities, and deviations from best practices.\n[STYLE]   Direct and constructive. Reference specific lines where possible.\n[FORMAT]  Sections: Critical Issues, Warnings, Suggestions. Use bullet points.\n[INPUT]   "
+    },
+    {
+      title: "Write Unit Tests",
+      tag: "Testing", group: "Developer",
+      desc: "Generate comprehensive unit tests covering edge cases.",
+      prompt: "[ROLE]    You are a senior software engineer specialising in test-driven development.\n[TASK]    Write comprehensive unit tests for the code below. Cover happy paths, edge cases, and error handling.\n[STYLE]   Clean, well-structured. Use the same language and testing framework as the input.\n[FORMAT]  Return only the test code, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Debug Error Message",
+      tag: "Debugging", group: "Developer",
+      desc: "Diagnose an error or stack trace and suggest a fix.",
+      prompt: "[ROLE]    You are a senior software engineer and debugger.\n[TASK]    Diagnose the error message or stack trace below. Explain the root cause and provide step-by-step fix instructions.\n[STYLE]   Clear and precise. Assume the reader is an intermediate developer.\n[FORMAT]  Sections: Root Cause, Why It Happened, How to Fix, How to Prevent.\n[INPUT]   "
+    },
+    {
+      title: "Explain Code Simply",
+      tag: "Communication", group: "Developer",
+      desc: "Translate code or technical concepts into plain language.",
+      prompt: "[ROLE]    You are a software engineer who excels at clear communication.\n[TASK]    Explain what the code or technical concept below does in plain language for a non-technical audience.\n[STYLE]   Simple, jargon-free. Use analogies where helpful.\n[FORMAT]  2-3 paragraph explanation. No code blocks.\n[INPUT]   "
+    },
+    {
+      title: "Write API Documentation",
+      tag: "Documentation", group: "Developer",
+      desc: "Generate clear API docs from code or a spec.",
+      prompt: "[ROLE]    You are a technical writer with software engineering expertise.\n[TASK]    Write clear API documentation for the endpoint or function below.\n[STYLE]   Precise and developer-friendly. Include examples.\n[FORMAT]  Sections: Overview, Parameters, Request Example, Response Example, Error Codes.\n[INPUT]   "
+    },
+    // Product Owner
+    {
+      title: "Write User Story",
+      tag: "Agile", group: "Product Owner",
+      desc: "Draft a well-formed user story with acceptance criteria.",
+      prompt: "[ROLE]    You are an experienced Product Owner.\n[TASK]    Write a well-formed user story for the feature or need described below.\n[STYLE]   Clear and outcome-focused.\n[FORMAT]  User story in As a / I want / So that format + 3-5 acceptance criteria in Gherkin (Given/When/Then).\n[INPUT]   "
+    },
+    {
+      title: "Define Acceptance Criteria",
+      tag: "Agile", group: "Product Owner",
+      desc: "Generate detailed, testable acceptance criteria from a feature description.",
+      prompt: "[ROLE]    You are an experienced Product Owner.\n[TASK]    Write detailed acceptance criteria for the feature or user story below.\n[STYLE]   Specific, testable, unambiguous.\n[FORMAT]  Numbered list in Gherkin format (Given/When/Then). Include edge cases.\n[INPUT]   "
+    },
+    {
+      title: "Sprint Retrospective Summary",
+      tag: "Agile", group: "Product Owner",
+      desc: "Summarise retro notes into structured actions.",
+      prompt: "[ROLE]    You are a Product Owner facilitating a sprint retrospective.\n[TASK]    Summarise the retrospective notes below into a structured output.\n[STYLE]   Concise, constructive, action-oriented.\n[FORMAT]  Three sections: What Went Well, What To Improve, Action Items (owner + action).\n[INPUT]   "
+    },
+    {
+      title: "Feature Prioritisation Brief",
+      tag: "Strategy", group: "Product Owner",
+      desc: "Write a prioritisation brief for a backlog of features.",
+      prompt: "[ROLE]    You are a Product Owner at a B2B SaaS company.\n[TASK]    Write a prioritisation brief for the features or requests listed below.\n[STYLE]   Objective, data-informed, stakeholder-friendly.\n[FORMAT]  Score each item on User Impact, Business Value, Effort (Low/Med/High). Add recommended priority order with rationale.\n[INPUT]   "
+    },
+    {
+      title: "Stakeholder Update",
+      tag: "Communication", group: "Product Owner",
+      desc: "Write a concise weekly product update for stakeholders.",
+      prompt: "[ROLE]    You are a Product Owner sending a weekly stakeholder update.\n[TASK]    Write a concise product update based on the notes below.\n[STYLE]   Executive-friendly, outcome-focused, no jargon.\n[FORMAT]  Sections: Summary (2 sentences), Shipped This Week, In Progress, Blockers, Next Week.\n[INPUT]   "
+    },
+    // Business Analyst
+    {
+      title: "Requirements Document",
+      tag: "Documentation", group: "Business Analyst",
+      desc: "Draft a structured requirements document from stakeholder notes.",
+      prompt: "[ROLE]    You are a senior Business Analyst.\n[TASK]    Draft a requirements document based on the stakeholder input or meeting notes below.\n[STYLE]   Formal, precise, unambiguous.\n[FORMAT]  Sections: Business Objective, Scope, Functional Requirements (numbered), Non-Functional Requirements, Assumptions, Out of Scope.\n[INPUT]   "
+    },
+    {
+      title: "Process Flow Summary",
+      tag: "Analysis", group: "Business Analyst",
+      desc: "Structure a business process from notes into a clear flow.",
+      prompt: "[ROLE]    You are a senior Business Analyst.\n[TASK]    Summarise and structure the business process described below into a clear process flow.\n[STYLE]   Logical, step-by-step, easy to follow.\n[FORMAT]  Numbered process steps with decision points noted. Flag any gaps or ambiguities at the end.\n[INPUT]   "
+    },
+    {
+      title: "Gap Analysis",
+      tag: "Analysis", group: "Business Analyst",
+      desc: "Identify gaps between current state and desired future state.",
+      prompt: "[ROLE]    You are a senior Business Analyst.\n[TASK]    Perform a gap analysis based on the current and desired state described below.\n[STYLE]   Analytical, structured, neutral.\n[FORMAT]  Table with columns: Area, Current State, Desired State, Gap, Recommended Action.\n[INPUT]   "
+    },
+    {
+      title: "Use Case Description",
+      tag: "Documentation", group: "Business Analyst",
+      desc: "Write a formal use case from a feature or scenario.",
+      prompt: "[ROLE]    You are a senior Business Analyst.\n[TASK]    Write a formal use case description for the scenario below.\n[STYLE]   Precise and unambiguous.\n[FORMAT]  Sections: Use Case Name, Actor(s), Preconditions, Main Flow (numbered), Alternative Flows, Postconditions.\n[INPUT]   "
+    },
+    {
+      title: "Business Case Summary",
+      tag: "Strategy", group: "Business Analyst",
+      desc: "Write a concise business case from project or initiative notes.",
+      prompt: "[ROLE]    You are a senior Business Analyst.\n[TASK]    Write a concise business case for the initiative or project described below.\n[STYLE]   Professional, evidence-based, persuasive without being salesy.\n[FORMAT]  Sections: Executive Summary, Problem Statement, Proposed Solution, Expected Benefits, Risks, Recommendation.\n[INPUT]   "
+    },
+    // Sales
+    {
+      title: "Outbound Prospecting Email",
+      tag: "Outbound", group: "Sales",
+      desc: "Write a short personalised outbound email to a target prospect.",
+      prompt: "[ROLE]    You are a senior Account Executive.\n[TASK]    Write a short outbound prospecting email (under 120 words) to the prospect described below.\n[STYLE]   Human, specific, not templated. Lead with a pain point. No exclamation marks.\n[FORMAT]  Subject line + email body. End with a single low-friction CTA.\n[INPUT]   "
+    },
+    {
+      title: "Follow-up After Meeting",
+      tag: "Follow-up", group: "Sales",
+      desc: "Write a follow-up email summarising a sales meeting.",
+      prompt: "[ROLE]    You are a senior Account Executive.\n[TASK]    Write a follow-up email after the sales meeting described below.\n[STYLE]   Professional, prompt, action-oriented. No fluff.\n[FORMAT]  Brief summary of discussion, agreed next steps with owners, clear CTA.\n[INPUT]   "
+    },
+    {
+      title: "Objection Handling Response",
+      tag: "Closing", group: "Sales",
+      desc: "Draft a confident, empathetic response to a sales objection.",
+      prompt: "[ROLE]    You are a senior Account Executive.\n[TASK]    Write a response to the sales objection below.\n[STYLE]   Empathetic, confident, not defensive. Acknowledge before reframing.\n[FORMAT]  3-4 sentences: acknowledge the concern, reframe with evidence, bridge to next step.\n[INPUT]   "
+    },
+    {
+      title: "Deal Win/Loss Summary",
+      tag: "Analysis", group: "Sales",
+      desc: "Write an internal win/loss analysis for a closed deal.",
+      prompt: "[ROLE]    You are a senior Account Executive writing an internal deal debrief.\n[TASK]    Write a win/loss summary for the deal described below.\n[STYLE]   Honest, analytical, no spin.\n[FORMAT]  Sections: Deal Overview, Why We Won/Lost, Key Decision Factors, Competitive Dynamics, Lessons Learned.\n[INPUT]   "
+    },
+    // Customer Success
+    {
+      title: "Customer Email Reply",
+      tag: "Support", group: "Customer Success",
+      desc: "Reply to a customer query with a warm, professional tone.",
+      prompt: "[ROLE]    You are a Customer Success Manager.\n[TASK]    Reply to the customer email below. Address their concern and provide clear next steps.\n[STYLE]   Professional but warm. No exclamation marks. No jargon.\n[FORMAT]  Return only the email reply, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "QBR Executive Summary",
+      tag: "Customer Success", group: "Customer Success",
+      desc: "Summarise account details into a QBR executive summary.",
+      prompt: "[ROLE]    You are a Customer Success Manager preparing a Quarterly Business Review.\n[TASK]    Summarise the account details below into a QBR executive summary.\n[STYLE]   Executive-friendly. Focus on outcomes and value delivered, not activity.\n[FORMAT]  Bullet points under: Highlights, Risks, Upcoming Milestones, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      title: "Account Health Update",
+      tag: "Internal", group: "Customer Success",
+      desc: "Write an internal account health update from notes.",
+      prompt: "[ROLE]    You are a Customer Success Manager.\n[TASK]    Write an internal account health update based on the notes below.\n[STYLE]   Concise, honest, no spin.\n[FORMAT]  Bullet points under: Overall Health (Green/Amber/Red), Usage and Adoption, Open Risks, CSM Actions.\n[INPUT]   "
+    },
+    {
+      title: "Post-Incident Customer Email",
+      tag: "Support", group: "Customer Success",
+      desc: "Write a post-incident summary email to a customer after a service disruption.",
+      prompt: "[ROLE]    You are a Customer Success Manager writing after a service incident.\n[TASK]    Write a post-incident email based on the details below.\n[STYLE]   Transparent, accountable, reassuring. No defensive language.\n[FORMAT]  Return only the email. Structure: What Happened, Customer Impact, Root Cause, What We Fixed, Next Steps.\n[INPUT]   "
+    },
+    // Marketing
+    {
+      title: "Blog Post Outline",
+      tag: "Content", group: "Marketing",
+      desc: "Generate a structured blog post outline with a strong angle.",
+      prompt: "[ROLE]    You are a B2B Content Strategist.\n[TASK]    Generate a blog post outline for the topic below.\n[STYLE]   Thought leadership focused. Technical depth over surface-level content.\n[FORMAT]  Sections: Title, Target audience, Key thesis, 4-6 section headers with 2-3 bullet points each, Suggested CTA.\n[INPUT]   "
+    },
+    {
+      title: "LinkedIn Post",
+      tag: "Social", group: "Marketing",
+      desc: "Write a LinkedIn post with a strong hook that drives engagement.",
+      prompt: "[ROLE]    You are a B2B content marketer.\n[TASK]    Write a LinkedIn post based on the topic or insight below.\n[STYLE]   Conversational, insightful, not corporate. Start with a hook. No hashtag spam.\n[FORMAT]  3-5 short paragraphs. End with a question or CTA. Under 250 words.\n[INPUT]   "
+    },
+    {
+      title: "Email Campaign Copy",
+      tag: "Email", group: "Marketing",
+      desc: "Write a B2B marketing email for a campaign or product launch.",
+      prompt: "[ROLE]    You are a B2B email marketing specialist.\n[TASK]    Write a marketing email for the campaign or product described below.\n[STYLE]   Clear, benefit-led, no fluff. No exclamation marks.\n[FORMAT]  Subject line, preview text, email body (under 200 words), single CTA button label.\n[INPUT]   "
+    },
+    {
+      title: "Competitive Analysis Summary",
+      tag: "Strategy", group: "Marketing",
+      desc: "Summarise competitive intelligence into a clear comparison.",
+      prompt: "[ROLE]    You are a product marketing manager.\n[TASK]    Summarise the competitive information below into a clear comparison.\n[STYLE]   Objective, factual, no hyperbole.\n[FORMAT]  Comparison table: Feature/Dimension vs competitors. Follow with a 2-3 sentence positioning recommendation.\n[INPUT]   "
+    },
+    // Technical Account Management
+    {
+      title: "Customer Email Reply",
+      tag: "Support", group: "Technical Account Management",
+      desc: "Reply to a customer query as a TAM with a professional but friendly tone.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Reply to the customer email below. Address their concern clearly and provide next steps.\n[STYLE]   Professional but warm. No exclamation marks. No jargon.\n[FORMAT]  Return only the email reply, no commentary.\n[INPUT]   "
+    },
+    {
+      title: "Escalation to Engineering",
+      tag: "Internal", group: "Technical Account Management",
+      desc: "Write an internal escalation email to engineering for a customer issue.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write an internal escalation email to the engineering team for the customer issue below.\n[STYLE]   Direct, factual, urgent but not alarmist.\n[FORMAT]  Subject line + email body. Include: Customer Impact, Steps to Reproduce, Customer Sentiment, Requested SLA.\n[INPUT]   "
+    },
+    {
+      title: "QBR Executive Summary",
+      tag: "Customer Success", group: "Technical Account Management",
+      desc: "Summarise account details into a QBR executive summary.",
+      prompt: "[ROLE]    You are a Technical Account Manager preparing a Quarterly Business Review.\n[TASK]    Summarise the account details below into a QBR executive summary.\n[STYLE]   Executive-friendly. Confident. Focus on outcomes not activity.\n[FORMAT]  Bullet points under: Highlights, Risks, Upcoming Milestones, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      title: "Post-Incident Customer Summary",
+      tag: "Support", group: "Technical Account Management",
+      desc: "Write a post-incident summary email to a customer after a service disruption.",
+      prompt: "[ROLE]    You are a Technical Account Manager writing after a service incident.\n[TASK]    Write a post-incident summary email to send to the customer based on the outage details below.\n[STYLE]   Transparent, accountable, reassuring. No defensive language.\n[FORMAT]  Return only the email. Structure: What Happened, Customer Impact, Root Cause, What We Fixed, Next Steps.\n[INPUT]   "
+    },
+    {
+      title: "Technical Error to Plain English",
+      tag: "Support", group: "Technical Account Management",
+      desc: "Translate a technical error or log into plain English for a non-technical customer.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Translate the technical error or log output below into plain English a non-technical customer can understand.\n[STYLE]   Clear, simple, no acronyms. Empathetic.\n[FORMAT]  2-3 sentences explaining what happened, followed by a suggested action for the customer.\n[INPUT]   "
+    },
+    {
+      title: "Account Health Check Update",
+      tag: "Internal", group: "Technical Account Management",
+      desc: "Write an internal account health update from notes.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write an internal account health update based on the notes below.\n[STYLE]   Concise, honest, no spin.\n[FORMAT]  Bullet points under: Overall Health (Green/Amber/Red), Usage and Adoption, Open Risks, TAM Actions.\n[INPUT]   "
+    },
+    {
+      title: "Renewal or Upsell Email",
+      tag: "Sales", group: "Technical Account Management",
+      desc: "Write a renewal or expansion email based on account context.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write a renewal or expansion email to the customer based on the account context below.\n[STYLE]   Consultative, not salesy. Lead with value and outcomes. No exclamation marks.\n[FORMAT]  Short email under 150 words. End with a soft CTA to schedule a call.\n[INPUT]   "
+    },
+    {
+      title: "Thread or Email Chain Summary",
+      tag: "Productivity", group: "Technical Account Management",
+      desc: "Summarise a Slack thread or email chain into a concise briefing.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Summarise the conversation thread below into a concise briefing.\n[STYLE]   Neutral, factual.\n[FORMAT]  3 sections: Key Issue, Current Status, Open Actions (with owner if mentioned).\n[INPUT]   "
+    },
+    {
+      title: "Feature Request to Product",
+      tag: "Internal", group: "Technical Account Management",
+      desc: "Write a structured feature request to the product team based on customer need.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Write a structured feature request to submit to the product team based on the customer need below.\n[STYLE]   Objective, evidence-based. Frame around customer impact not preference.\n[FORMAT]  Include: Customer Problem, Current Workaround, Business Impact, Frequency (how many customers affected).\n[INPUT]   "
+    },
+    {
+      title: "Meeting Notes and Actions",
+      tag: "Productivity", group: "Technical Account Management",
+      desc: "Extract structured meeting notes and action items from a transcript.",
+      prompt: "[ROLE]    You are a Technical Account Manager.\n[TASK]    Extract structured meeting notes and action items from the transcript or rough notes below.\n[STYLE]   Concise. Use names for action owners where mentioned.\n[FORMAT]  Two sections: Summary (3-4 sentences) and Action Items (owner, task, due date if mentioned).\n[INPUT]   "
+    }
+  ];
+
+  const PERSONAS = ['All', ...new Set(TEMPLATES.map(t => t.group))];
+  let currentPersona = 'All';
+  let searchQuery = '';
+
+  // ── Helpers ───────────────────────────────────────────────────────
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function showToast(msg) {
+    document.querySelectorAll('.toast').forEach(t => t.remove());
+    const d = document.createElement('div');
+    d.className = 'toast';
+    d.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${escHtml(msg)}`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 3000);
+  }
+
+  function togglePromptPreview(el) {
+    const preview = el.nextElementSibling;
+    const chevron = el.querySelector('.chevron');
+    const hint    = el.querySelector('.expand-hint span');
+    const isOpen  = preview.classList.toggle('open');
+    chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
+    hint.textContent = isOpen ? 'Hide prompt' : 'Preview prompt';
+  }
+
+  // ── Bookmarklet ───────────────────────────────────────────────────
+  function makeBookmarkletHref(promptText) {
+    const cleaned = promptText.replace(/^\[[A-Z]+\]\s*/gm, '').trim() + '\n';
+    const escaped = cleaned
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/\r?\n/g, '\\n');
+
+    const js =
+      `(function(){` +
+        `var el=document.querySelector('.ql-editor')||` +
+        `document.querySelector('[contenteditable]')||` +
+        `document.querySelector('textarea');` +
+        `if(el){` +
+          `el.focus();` +
+          `var t='${escaped}';` +
+          `var sel=window.getSelection();` +
+          `var range=document.createRange();` +
+          `range.selectNodeContents(el);` +
+          `range.collapse(false);` +
+          `sel.removeAllRanges();` +
+          `sel.addRange(range);` +
+          `document.execCommand('insertText',false,t);` +
+        `}` +
+      `})();`;
+
+    return 'javascript:' + js;
+  }
+
+  // ── Copy helpers ──────────────────────────────────────────────────
+  function flashCopied(btn) {
+    const original = btn.innerHTML;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+    btn.style.color = '#16a34a'; btn.style.borderColor = '#86efac';
+    setTimeout(() => { btn.innerHTML = original; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+  }
+
+  function copyPromptText(idx) {
+    const btn = document.querySelector(`[data-copy-idx="${idx}"]`);
+    navigator.clipboard.writeText(TEMPLATES[idx].prompt).then(() => { if (btn) flashCopied(btn); });
+  }
+
+  function copyCustomPromptText(idx) {
+    const btn = document.querySelector(`[data-custom-copy-idx="${idx}"]`);
+    const prompts = loadCustomPrompts();
+    navigator.clipboard.writeText(prompts[idx].prompt).then(() => { if (btn) flashCopied(btn); });
+  }
+
+  // ── Card HTML ─────────────────────────────────────────────────────
+  const BOOKMARK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+  const COPY_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+  const EDIT_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+  const DELETE_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>`;
+  const CHEVRON = `<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+
+  function builtInCardHTML(t, i) {
+    return `
+      <div class="template-card">
+        <div class="card-clickable" onclick="togglePromptPreview(this)">
+          <div class="card-top">
+            <span class="card-title">${t.title}</span>
+            <span class="card-tag">${t.tag}</span>
+          </div>
+          <p class="card-desc">${t.desc}</p>
+          <div class="expand-hint">${CHEVRON}<span>Preview prompt</span></div>
+        </div>
+        <pre class="prompt-preview">${escHtml(t.prompt)}</pre>
+        <div class="card-footer">
+          <a class="bookmark-btn" href="${makeBookmarkletHref(t.prompt)}" title="Drag to bookmarks bar">${BOOKMARK_ICON} ${t.title}</a>
+          <button class="copy-btn" data-copy-idx="${i}" onclick="copyPromptText(${i})" title="Copy prompt text">${COPY_ICON} Copy</button>
+          <button class="edit-btn" onclick="editBuiltInTemplate(${i})" title="Edit this prompt">${EDIT_ICON} Edit</button>
+        </div>
+      </div>`;
+  }
+
+  function customCardHTML(t, i) {
+    return `
+      <div class="template-card">
+        <div class="card-clickable" onclick="togglePromptPreview(this)">
+          <div class="card-top">
+            <span class="card-title">${t.title}</span>
+            <span class="card-tag card-tag-custom">${t.tag || 'Custom'}</span>
+          </div>
+          <p class="card-desc">${t.prompt.substring(0, 100).replace(/\n/g,' ')}…</p>
+          <div class="expand-hint">${CHEVRON}<span>Preview prompt</span></div>
+        </div>
+        <pre class="prompt-preview">${escHtml(t.prompt)}</pre>
+        <div class="card-footer">
+          <a class="bookmark-btn" href="${makeBookmarkletHref(t.prompt)}" title="Drag to bookmarks bar">${BOOKMARK_ICON} ${t.title}</a>
+          <button class="copy-btn" data-custom-copy-idx="${i}" onclick="copyCustomPromptText(${i})" title="Copy prompt text">${COPY_ICON} Copy</button>
+          <button class="edit-btn" onclick="editCustomPrompt(${i})" title="Edit">${EDIT_ICON} Edit</button>
+          <button class="delete-btn" onclick="deleteCustomPrompt(${i})" title="Delete">${DELETE_ICON}</button>
+        </div>
+      </div>`;
+  }
+
+  // ── Search ────────────────────────────────────────────────────────
+  function handleSearch(val) {
+    searchQuery = val.trim().toLowerCase();
+    document.getElementById('search-clear').style.display = val ? 'flex' : 'none';
+    renderTemplates();
+  }
+
+  function clearSearch() {
+    document.getElementById('search-input').value = '';
+    handleSearch('');
+    document.getElementById('search-input').focus();
+  }
+
+  // ── Render tabs ───────────────────────────────────────────────────
+  function renderTabs() {
+    const bar = document.getElementById('persona-tabs');
+    const counts = {};
+    TEMPLATES.forEach(t => { counts[t.group] = (counts[t.group] || 0) + 1; });
+    bar.innerHTML = PERSONAS.map(p => {
+      const count = p === 'All' ? TEMPLATES.length : (counts[p] || 0);
+      return `<button class="tab ${p === currentPersona ? 'active' : ''}" onclick="filterByPersona('${p}')">${p}<span class="tab-count">${count}</span></button>`;
+    }).join('');
+  }
+
+  function filterByPersona(persona) {
+    currentPersona = persona;
+    renderTabs();
+    renderTemplates();
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────
+  function slugify(s) { return s.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''); }
+
+  function downloadJSON(data, filename) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function catBtns(group, isCustom) {
+    const sl = slugify(group);
+    const inputId = `import-cat-${sl}`;
+    const importFn = isCustom ? `importToCustomCategory('${group}',this)` : `importToBuiltInCategory('${group}',this)`;
+    const exportFn = isCustom ? `exportCustomCategory('${group}')` : `exportCategory('${group}')`;
+    return `
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button class="cat-btn" onclick="document.getElementById('${inputId}').click()" title="Import more ${group} prompts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import
+        </button>
+        <button class="cat-btn" onclick="${exportFn}" title="Export ${group} prompts as JSON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+        <input type="file" id="${inputId}" accept=".json" style="display:none" onchange="${importFn}">
+      </div>`;
+  }
+
+  function sectionHeader(group, count, isCustom, gi) {
+    return `
+      <div class="section-header" style="${gi > 0 ? 'margin-top:36px;' : ''}">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <h2 class="section-title">${group}</h2>
+          <span class="section-count">${count} templates</span>
+        </div>
+        ${catBtns(group, isCustom)}
+      </div>`;
+  }
+
+  // ── Render built-in templates ─────────────────────────────────────
+  function renderTemplates() {
+    const container = document.getElementById('templates-container');
+
+    let filtered = TEMPLATES.map((t, i) => ({ t, i }));
+
+    if (currentPersona !== 'All')
+      filtered = filtered.filter(({ t }) => t.group === currentPersona);
+
+    if (searchQuery)
+      filtered = filtered.filter(({ t }) =>
+        `${t.title} ${t.desc} ${t.tag} ${t.group} ${t.prompt}`.toLowerCase().includes(searchQuery));
+
+    if (!filtered.length) {
+      container.innerHTML = `<div class="empty-state">${searchQuery ? `No prompts matching "<strong>${escHtml(searchQuery)}</strong>"` : 'No templates for this persona yet.'}</div>`;
+      return;
+    }
+
+    // When searching, show flat list with result count
+    if (searchQuery) {
+      container.innerHTML = `
+        <p class="search-results-label">${filtered.length} result${filtered.length > 1 ? 's' : ''} for "<strong>${escHtml(searchQuery)}</strong>"</p>
+        <div class="templates-grid">${filtered.map(({ t, i }) => builtInCardHTML(t, i)).join('')}</div>`;
+      return;
+    }
+
+    const groups = {};
+    filtered.forEach(({ t, i }) => {
+      if (!groups[t.group]) groups[t.group] = [];
+      groups[t.group].push({ t, i });
+    });
+
+    container.innerHTML = Object.entries(groups).map(([g, items], gi) => `
+      ${sectionHeader(g, items.length, false, gi)}
+      <div class="templates-grid">${items.map(({ t, i }) => builtInCardHTML(t, i)).join('')}</div>
+    `).join('');
+  }
+
+  // ── localStorage ──────────────────────────────────────────────────
+  function loadCustomPrompts() {
+    try { return JSON.parse(localStorage.getItem('promptbar_prompts') || '[]'); }
+    catch { return []; }
+  }
+
+  function saveCustomPrompt(entry) {
+    const prompts = loadCustomPrompts();
+    prompts.push(entry);
+    localStorage.setItem('promptbar_prompts', JSON.stringify(prompts));
+  }
+
+  function deleteCustomPrompt(idx) {
+    const prompts = loadCustomPrompts();
+    prompts.splice(idx, 1);
+    localStorage.setItem('promptbar_prompts', JSON.stringify(prompts));
+    renderCustomPrompts();
+    showToast('Prompt deleted');
+  }
+
+  function renderCustomPrompts() {
+    const prompts = loadCustomPrompts();
+    const grid = document.getElementById('my-templates-grid');
+    const count = document.getElementById('my-template-count');
+    count.textContent = `${prompts.length} saved`;
+
+    if (!prompts.length) {
+      grid.innerHTML = `<div class="empty-state">No saved prompts yet. Add your own below or import a category.</div>`;
+      return;
+    }
+
+    // Group by persona
+    const groups = {};
+    prompts.forEach((t, i) => {
+      const g = t.group || 'Custom';
+      if (!groups[g]) groups[g] = [];
+      groups[g].push({ t, i });
+    });
+
+    grid.innerHTML = Object.entries(groups).map(([g, items], gi) => `
+      ${sectionHeader(g, items.length, true, gi)}
+      <div class="templates-grid">${items.map(({ t, i }) => customCardHTML(t, i)).join('')}</div>
+    `).join('');
+  }
+
+  // ── Import / Export ───────────────────────────────────────────────
+  function readJSON(input, onData) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const data = JSON.parse(e.target.result);
+        onData(data);
+      } catch { showToast('Invalid JSON file'); }
+    };
+    reader.readAsText(file);
+    input.value = '';
+  }
+
+  function mergeIntoStorage(incoming) {
+    const existing = loadCustomPrompts();
+    localStorage.setItem('promptbar_prompts', JSON.stringify([...existing, ...incoming]));
+    renderCustomPrompts();
+  }
+
+  // Import a new category (respects group from file, creates new section)
+  function importNewCategory(input) {
+    readJSON(input, data => {
+      const incoming = Array.isArray(data) ? data : (data.prompts || []);
+      if (!incoming.length) { showToast('No prompts found in file'); return; }
+      mergeIntoStorage(incoming);
+      const groups = [...new Set(incoming.map(p => p.group).filter(Boolean))];
+      showToast(`Imported ${incoming.length} prompt${incoming.length > 1 ? 's' : ''}${groups.length ? ' → ' + groups.join(', ') : ''}`);
+    });
+  }
+
+  // Import into an existing built-in category (forces group to match section)
+  function importToBuiltInCategory(group, input) {
+    readJSON(input, data => {
+      const incoming = (Array.isArray(data) ? data : (data.prompts || [])).map(p => ({ ...p, group }));
+      if (!incoming.length) { showToast('No prompts found in file'); return; }
+      mergeIntoStorage(incoming);
+      showToast(`Imported ${incoming.length} prompt${incoming.length > 1 ? 's' : ''} into ${group}`);
+    });
+  }
+
+  // Import into an existing custom category (forces group to match section)
+  function importToCustomCategory(group, input) {
+    importToBuiltInCategory(group, input);
+  }
+
+  // Export a single built-in category
+  function exportCategory(group) {
+    const prompts = TEMPLATES.filter(t => t.group === group);
+    downloadJSON({ version: '1.0', tool: 'PromptBar', description: `${group} prompt pack`, prompts },
+      `${slugify(group)}.json`);
+    showToast(`Exported ${prompts.length} ${group} prompts`);
+  }
+
+  // Export a single custom category
+  function exportCustomCategory(group) {
+    const prompts = loadCustomPrompts().filter(t => (t.group || 'Custom') === group);
+    if (!prompts.length) { showToast('No prompts to export in this category'); return; }
+    downloadJSON({ version: '1.0', tool: 'PromptBar', description: `${group} prompt pack`, prompts },
+      `${slugify(group)}.json`);
+    showToast(`Exported ${prompts.length} ${group} prompts`);
+  }
+
+  // Export all custom prompts
+  function exportAllCustom() {
+    const prompts = loadCustomPrompts();
+    if (!prompts.length) { showToast('No saved prompts to export'); return; }
+    downloadJSON({ version: '1.0', tool: 'PromptBar', prompts }, 'promptbar-all.json');
+    showToast(`Exported ${prompts.length} prompt${prompts.length > 1 ? 's' : ''}`);
+  }
+
+  // ── Edit state ────────────────────────────────────────────────────
+  let editingCustomIndex = null;
+
+  function setFormMode(isEditing) {
+    document.getElementById('save-btn-label').textContent = isEditing ? 'Update Prompt' : 'Save Prompt';
+    document.getElementById('cancel-edit-btn').style.display = isEditing ? 'inline-flex' : 'none';
+    document.getElementById('form-hint').textContent = isEditing
+      ? 'Editing existing prompt — click Update to save'
+      : 'Saved prompts appear in My Templates above';
+  }
+
+  function editBuiltInTemplate(i) {
+    const t = TEMPLATES[i];
+    document.getElementById('prompt-name').value = t.title;
+    document.getElementById('prompt-tag').value = t.tag;
+    document.getElementById('prompt-persona').value = t.group;
+    document.getElementById('prompt-text').value = t.prompt;
+    editingCustomIndex = null;
+    setFormMode(false);
+    document.querySelector('.add-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('prompt-name').focus();
+  }
+
+  function editCustomPrompt(i) {
+    const t = loadCustomPrompts()[i];
+    document.getElementById('prompt-name').value = t.title;
+    document.getElementById('prompt-tag').value = t.tag || '';
+    document.getElementById('prompt-persona').value = t.group || 'General';
+    document.getElementById('prompt-text').value = t.prompt;
+    editingCustomIndex = i;
+    setFormMode(true);
+    document.querySelector('.add-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('prompt-name').focus();
+  }
+
+  function cancelEdit() {
+    editingCustomIndex = null;
+    setFormMode(false);
+    ['prompt-name','prompt-tag','prompt-text'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  // ── Save / update prompt ──────────────────────────────────────────
+  function savePrompt() {
+    const name    = document.getElementById('prompt-name').value.trim();
+    const tag     = document.getElementById('prompt-tag').value.trim();
+    const persona = document.getElementById('prompt-persona').value;
+    const text    = document.getElementById('prompt-text').value.trim();
+
+    if (!name) { document.getElementById('prompt-name').focus(); return; }
+    if (!text) { document.getElementById('prompt-text').focus(); return; }
+
+    const entry = { title: name, tag: tag || 'Custom', group: persona, prompt: text };
+
+    if (editingCustomIndex !== null) {
+      const prompts = loadCustomPrompts();
+      prompts[editingCustomIndex] = entry;
+      localStorage.setItem('promptbar_prompts', JSON.stringify(prompts));
+      editingCustomIndex = null;
+      showToast('Prompt updated');
+    } else {
+      saveCustomPrompt(entry);
+      showToast('Prompt saved');
+    }
+
+    setFormMode(false);
+    renderCustomPrompts();
+    document.getElementById('my-templates-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    ['prompt-name','prompt-tag','prompt-text'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────
+  renderTabs();
+  renderTemplates();
+  renderCustomPrompts();
+
+  // Cmd+K / Ctrl+K focuses search
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const input = document.getElementById('search-input');
+      input.focus(); input.select();
+    }
+    if (e.key === 'Escape' && document.activeElement.id === 'search-input') {
+      clearSearch();
+    }
+  });
+</script>
+</body>
+</html>
