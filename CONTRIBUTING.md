@@ -23,7 +23,7 @@ Every prompt must follow this structure:
 {
   "title":   "Short display name — shown on the card and as the bookmark name",
   "tag":     "Category badge — keep it short (1-2 words, e.g. Agile, Outbound, Documentation)",
-  "group":   "One of: Developer | Product Owner | Business Analyst | Sales | Customer Success | Marketing | General",
+  "group":   "One of: Everyday | Developer | Product Owner | Business Analyst | Sales | Customer Success | Technical Account Management | Engineering Manager | HR & People | Legal | Marketing | General",
   "desc":    "One sentence — what does this prompt help the user do?",
   "prompt":  "[ROLE]    You are a...\n[TASK]    Write / review / summarise / explain...\n[STYLE]   Tone and style guidance.\n[FORMAT]  What the output should look like.\n[INPUT]   "
 }
@@ -35,7 +35,7 @@ Every prompt must follow this structure:
 |---|---|
 | `title` | Max 50 characters. Sentence case. No punctuation at end. |
 | `tag` | Max 20 characters. Title Case. |
-| `group` | Must exactly match one of the allowed values above. |
+| `group` | Must exactly match one of the 12 allowed personas listed above. |
 | `desc` | One sentence, no full stop at end, max 100 characters. |
 | `prompt` | Must end with `[INPUT]   ` (3 spaces after). Use `\n` for line breaks. |
 
@@ -53,7 +53,7 @@ Every prompt must follow this structure:
 
 ### Option A — Add to `prompts/default.json`
 
-Add your prompt object to the `prompts` array in `prompts/default.json`. Keep prompts grouped by `group` for readability.
+Add your prompt object to the `prompts` array in the relevant persona file (e.g. `prompts/developer.json`). Keep prompts grouped by `group` for readability.
 
 ### Option B — Create a new pack file
 

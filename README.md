@@ -19,8 +19,9 @@ It works as a single HTML file — open it in your browser, drag a template to y
 ## Features
 
 - One-click prompt injection into Gemini, ChatGPT, and Claude
-- 47 built-in prompts across 7 personas
-- Filter by persona: Everyday, Developer, Product Owner, Business Analyst, Sales, Customer Success, Marketing
+- 74 built-in prompts across 11 personas
+- Filter by persona: Everyday, Developer, Product Owner, Business Analyst, Sales, Customer Success, Technical Account Management, Engineering Manager, HR & People, Legal, Marketing
+- Search across all prompts
 - Save your own prompts (stored in localStorage)
 - Export your prompts as JSON to share with your team
 - Import JSON prompt packs from others
@@ -47,7 +48,7 @@ All prompts follow a structured format with five fields:
 {
   "title":   "Short display name",
   "tag":     "Category badge (e.g. Documentation, Agile)",
-  "group":   "Persona (Developer | Product Owner | Business Analyst | Sales | Customer Success | Marketing | General)",
+  "group":   "Persona (Everyday | Developer | Product Owner | Business Analyst | Sales | Customer Success | Technical Account Management | Engineering Manager | HR & People | Legal | Marketing | General)",
   "desc":    "One sentence describing what the prompt does",
   "prompt":  "[ROLE]    You are a...\n[TASK]    Write / review / summarise...\n[STYLE]   Tone and style instructions.\n[FORMAT]  Output format instructions.\n[INPUT]   "
 }
@@ -59,10 +60,10 @@ The `[ROLE]`, `[TASK]`, `[STYLE]`, `[FORMAT]` labels are shown in the library fo
 
 ## Importing a Prompt Pack
 
-Click **Import JSON** in the My Templates section and select any `.json` file that matches the format above.
+Click **Import Category** in the My Templates section and select any `.json` file that matches the format above.
 
 To import a specific persona pack, use the relevant file under `prompts/`.  
-To see an example with 3 prompts and schema documentation: use `prompts/example.json`
+To see an example with 3 prompts: use `prompts/example.json`
 
 ---
 
@@ -73,7 +74,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for full instr
 **Quick summary:**
 
 1. Fork the repository
-2. Add your prompts to `prompts/default.json` or create a new pack file under `prompts/`
+2. Add your prompts to the relevant file under `prompts/` or create a new pack file
 3. Follow the prompt format above
 4. Open a pull request with a short description of what persona/use case you're adding
 
@@ -83,24 +84,31 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for full instr
 
 ```
 promptbar/
-├── index.html                    # The app — open this in your browser
-├── favicon.svg                   # Browser tab icon
-├── vercel.json                   # Deployment config
+├── index.html                          # The app — open this in your browser
+├── favicon.svg                         # Browser tab icon
+├── vercel.json                         # Deployment config
+├── og.svg                              # Social preview image
 ├── prompts/
-│   ├── everyday.json             # 20 everyday prompts (writing, email, productivity)
-│   ├── developer.json            # 5 developer prompts
-│   ├── product-owner.json        # 5 product owner prompts
-│   ├── business-analyst.json     # 5 business analyst prompts
-│   ├── sales.json                # 4 sales prompts
-│   ├── customer-success.json     # 4 customer success prompts
-│   ├── marketing.json            # 4 marketing prompts
-│   └── example.json              # Example format + schema for contributors
+│   ├── everyday.json                   # 20 everyday prompts
+│   ├── developer.json                  # 5 developer prompts
+│   ├── product-owner.json              # 5 product owner prompts
+│   ├── business-analyst.json           # 5 business analyst prompts
+│   ├── sales.json                      # 4 sales prompts
+│   ├── customer-success.json           # 4 customer success prompts
+│   ├── technical-account-management.json  # 10 TAM prompts
+│   ├── engineering-manager.json        # 6 engineering manager prompts
+│   ├── hr-people.json                  # 6 HR & people prompts
+│   ├── legal.json                      # 5 legal prompts
+│   ├── marketing.json                  # 4 marketing prompts
+│   └── example.json                    # Example format for contributors
 ├── README.md
-└── CONTRIBUTING.md
+├── CONTRIBUTING.md
+└── LICENSE
 ```
 
 ---
 
 ## License
 
-MIT — free to use, modify, and distribute.
+MIT — free to use, modify, and distribute.  
+Built by [Rakesh Pawali](https://github.com/rakeshpawali-okta).

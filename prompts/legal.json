@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Legal prompt pack — 5 prompts for legal professionals and business stakeholders",
+  "prompts": [
+    {
+      "title": "Contract Summary",
+      "tag": "Review",
+      "group": "Legal",
+      "desc": "Summarise a contract into plain language key points for non-legal stakeholders.",
+      "prompt": "[ROLE]    You are a legal professional summarising contracts for business stakeholders.\n[TASK]    Summarise the contract or agreement below into plain language key points.\n[STYLE]   Clear, objective, no legalese. Written for a non-lawyer.\n[FORMAT]  Sections: Parties Involved, Key Obligations (each party), Important Dates and Deadlines, Risks or Unusual Clauses, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      "title": "NDA Key Points",
+      "tag": "Review",
+      "group": "Legal",
+      "desc": "Extract the key points and obligations from a non-disclosure agreement.",
+      "prompt": "[ROLE]    You are a legal professional reviewing an NDA.\n[TASK]    Extract and summarise the key points from the NDA below.\n[STYLE]   Plain English. Flag anything unusual or one-sided.\n[FORMAT]  Sections: What is Confidential, Obligations of Each Party, Duration, Exclusions, Termination, Any Red Flags.\n[INPUT]   "
+    },
+    {
+      "title": "Compliance Notice",
+      "tag": "Compliance",
+      "group": "Legal",
+      "desc": "Write a clear compliance notice or policy communication for internal audiences.",
+      "prompt": "[ROLE]    You are a legal or compliance professional writing an internal communication.\n[TASK]    Write a compliance notice based on the regulation or policy requirement below.\n[STYLE]   Clear and authoritative but not intimidating. Avoid dense legal language.\n[FORMAT]  What the requirement is, who it applies to, what action is needed, by when, consequences of non-compliance, contact for questions.\n[INPUT]   "
+    },
+    {
+      "title": "Legal Risk Summary",
+      "tag": "Risk",
+      "group": "Legal",
+      "desc": "Summarise legal risks in a proposal or situation for a non-legal audience.",
+      "prompt": "[ROLE]    You are a legal advisor summarising risks for a business stakeholder.\n[TASK]    Summarise the legal risks in the situation or document below.\n[STYLE]   Direct and objective. Prioritise the risks by severity. No unnecessary hedging.\n[FORMAT]  Risk summary table: Risk, Likelihood (High/Medium/Low), Business Impact, Mitigation Recommendation.\n[INPUT]   "
+    },
+    {
+      "title": "Terms of Service Summary",
+      "tag": "Review",
+      "group": "Legal",
+      "desc": "Summarise a Terms of Service or Privacy Policy into plain language.",
+      "prompt": "[ROLE]    You are a legal professional summarising terms for a non-legal audience.\n[TASK]    Summarise the Terms of Service or Privacy Policy below into plain language.\n[STYLE]   Simple and direct. Highlight anything users should pay attention to.\n[FORMAT]  Sections: What the Service Does with Your Data, Your Rights, What You Agree To, What They Can Change, How to Cancel or Delete.\n[INPUT]   "
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "Engineering Manager prompt pack — 6 prompts for EMs and engineering leads",
+  "prompts": [
+    {
+      "title": "Performance Review",
+      "tag": "People",
+      "group": "Engineering Manager",
+      "desc": "Write a structured performance review for a direct report.",
+      "prompt": "[ROLE]    You are an Engineering Manager writing a formal performance review.\n[TASK]    Write a structured performance review for the team member based on the notes below.\n[STYLE]   Honest, constructive, and specific. Balance strengths with areas for growth. No vague praise.\n[FORMAT]  Sections: Overall Summary, Key Strengths (3-4 bullets), Areas for Development (2-3 bullets), Goals for Next Period.\n[INPUT]   "
+    },
+    {
+      "title": "Incident Postmortem",
+      "tag": "Incidents",
+      "group": "Engineering Manager",
+      "desc": "Write a structured postmortem from incident notes.",
+      "prompt": "[ROLE]    You are an Engineering Manager writing a post-incident review.\n[TASK]    Write a structured postmortem based on the incident details below.\n[STYLE]   Blameless, factual, focused on systems not individuals.\n[FORMAT]  Sections: Incident Summary, Timeline, Root Cause, Impact, What Went Well, What Went Wrong, Action Items (owner + task).\n[INPUT]   "
+    },
+    {
+      "title": "Engineering Roadmap Update",
+      "tag": "Communication",
+      "group": "Engineering Manager",
+      "desc": "Communicate a technical roadmap update to non-technical stakeholders.",
+      "prompt": "[ROLE]    You are an Engineering Manager presenting a roadmap update to business stakeholders.\n[TASK]    Write a roadmap update based on the technical notes below. Translate technical work into business outcomes.\n[STYLE]   Clear, outcome-focused. No technical jargon. Confident.\n[FORMAT]  Sections: What We Delivered, What We Are Building Next, Known Risks, What We Need from Stakeholders.\n[INPUT]   "
+    },
+    {
+      "title": "Hiring Brief",
+      "tag": "Hiring",
+      "group": "Engineering Manager",
+      "desc": "Write a clear hiring brief for a new engineering role.",
+      "prompt": "[ROLE]    You are an Engineering Manager writing an internal hiring brief.\n[TASK]    Write a hiring brief for the engineering role described below.\n[STYLE]   Specific, honest about the team context, realistic about requirements.\n[FORMAT]  Sections: Role Summary, Why This Role Exists, Key Responsibilities (5-6 bullets), Must-Have Skills, Nice-to-Have, Team Context.\n[INPUT]   "
+    },
+    {
+      "title": "1-1 Agenda",
+      "tag": "Meetings",
+      "group": "Engineering Manager",
+      "desc": "Create a structured 1-1 agenda based on current context.",
+      "prompt": "[ROLE]    You are an Engineering Manager preparing for a 1-1 meeting.\n[TASK]    Create a structured 1-1 agenda based on the context and open topics below.\n[STYLE]   Conversational, focused. Prioritise the report's topics over manager updates.\n[FORMAT]  Sections: Check-in (1-2 questions), Their Topics, Manager Updates, Action Items from Last Meeting.\n[INPUT]   "
+    },
+    {
+      "title": "Team Announcement",
+      "tag": "Communication",
+      "group": "Engineering Manager",
+      "desc": "Write a clear team announcement for a change, decision, or update.",
+      "prompt": "[ROLE]    You are an Engineering Manager writing a team communication.\n[TASK]    Write a team announcement based on the update or decision below.\n[STYLE]   Direct, transparent, and human. Acknowledge impact on the team where relevant.\n[FORMAT]  Short paragraphs. Lead with what is changing, then why, then what it means for the team.\n[INPUT]   "
+    }
+  ]
+}

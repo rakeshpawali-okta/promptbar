@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "tool": "PromptBar",
+  "description": "HR & People prompt pack — 6 prompts for HR professionals and people managers",
+  "prompts": [
+    {
+      "title": "Job Description",
+      "tag": "Hiring",
+      "group": "HR & People",
+      "desc": "Write a clear, inclusive job description from a role brief.",
+      "prompt": "[ROLE]    You are a senior HR Business Partner.\n[TASK]    Write a job description for the role described below.\n[STYLE]   Clear, inclusive, and appealing. Avoid jargon and gendered language.\n[FORMAT]  Sections: About the Role, What You'll Do (5-6 bullets), What We're Looking For (5-6 bullets), Nice to Have (3 bullets).\n[INPUT]   "
+    },
+    {
+      "title": "Candidate Rejection Email",
+      "tag": "Hiring",
+      "group": "HR & People",
+      "desc": "Write a warm, respectful rejection email to an unsuccessful candidate.",
+      "prompt": "[ROLE]    You are an HR professional sending a rejection email.\n[TASK]    Write a rejection email to the candidate based on the context below.\n[STYLE]   Warm, respectful, and specific enough to feel personal. Not a template.\n[FORMAT]  3-4 sentences. Thank them, deliver the news clearly, leave the door open.\n[INPUT]   "
+    },
+    {
+      "title": "Performance Improvement Plan",
+      "tag": "Performance",
+      "group": "HR & People",
+      "desc": "Draft a structured performance improvement plan from manager notes.",
+      "prompt": "[ROLE]    You are an HR Business Partner drafting a performance improvement plan.\n[TASK]    Write a structured PIP based on the performance issues and context below.\n[STYLE]   Professional, clear, and constructive. Focus on behaviours and outcomes, not personality.\n[FORMAT]  Sections: Background, Performance Concerns (specific examples), Expected Standards, Support Provided, Timeline and Review Points, Consequences.\n[INPUT]   "
+    },
+    {
+      "title": "Policy Announcement",
+      "tag": "Comms",
+      "group": "HR & People",
+      "desc": "Write a company-wide policy announcement that people will actually read.",
+      "prompt": "[ROLE]    You are an HR professional writing a company-wide policy communication.\n[TASK]    Write an announcement for the policy or change described below.\n[STYLE]   Clear, human, and direct. Lead with what changes and when, not the backstory.\n[FORMAT]  Short intro paragraph, bullet points for key changes, who it affects, effective date, who to contact with questions.\n[INPUT]   "
+    },
+    {
+      "title": "Exit Interview Summary",
+      "tag": "Retention",
+      "group": "HR & People",
+      "desc": "Summarise exit interview notes into structured themes and actions.",
+      "prompt": "[ROLE]    You are an HR Business Partner summarising an exit interview.\n[TASK]    Summarise the exit interview notes below into a structured internal report.\n[STYLE]   Neutral, factual. No editorialising.\n[FORMAT]  Sections: Reason for Leaving, Key Themes (bullets), Manager/Team Feedback, Retention Flags, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      "title": "Offer Letter Email",
+      "tag": "Hiring",
+      "group": "HR & People",
+      "desc": "Write a warm, professional offer letter email to a selected candidate.",
+      "prompt": "[ROLE]    You are an HR professional sending a job offer email.\n[TASK]    Write a job offer email based on the role and candidate details below.\n[STYLE]   Warm and professional. Make the candidate feel genuinely excited.\n[FORMAT]  Opening (congratulations), role and start date, key terms summary, next steps, warm close.\n[INPUT]   "
+    }
+  ]
+}

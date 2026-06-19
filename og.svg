@@ -27,14 +27,14 @@
   <text x="450" y="462"
     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
     font-size="18" fill="#d1d5db" text-anchor="middle">
-    57 prompts
+    74 prompts
   </text>
 
   <rect x="576" y="432" width="212" height="46" rx="23" fill="#1f2937"/>
   <text x="682" y="462"
     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
     font-size="18" fill="#d1d5db" text-anchor="middle">
-    8 personas
+    11 personas
   </text>
 
   <rect x="808" y="432" width="212" height="46" rx="23" fill="#1f2937"/>

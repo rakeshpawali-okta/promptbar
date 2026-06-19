@@ -104,7 +104,7 @@
 
     .setup-title {
       font-size: 11px; font-weight: 700; color: var(--primary);
-      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px;
+      text-transform: uppercase; letter-spacing: 1px;
     }
 
     .setup-steps { display: flex; gap: 0; }
@@ -127,6 +127,201 @@
 
     .step p { font-size: 13px; color: var(--text-secondary); }
     .step p strong { color: var(--text); }
+
+    /* ── Demo animation ── */
+    .demo-card {
+      width: 300px; flex-shrink: 0;
+      background: white; border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.10);
+      user-select: none;
+    }
+
+    .demo-chrome {
+      background: #ececec; border-bottom: 1px solid #ddd;
+      padding: 7px 10px; display: flex; align-items: center; gap: 8px;
+    }
+
+    .demo-dots { display: flex; gap: 5px; flex-shrink: 0; }
+    .demo-dot  { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+    .demo-url-bar {
+      flex: 1; background: white; border: 1px solid #ddd;
+      border-radius: 4px; padding: 3px 8px;
+      font-size: 10px; color: #888; text-align: center;
+      transition: opacity 0.3s;
+    }
+
+    .demo-bm-bar {
+      background: #f7f7f7; border-bottom: 1px solid #e0e0e0;
+      padding: 5px 10px; display: flex; gap: 6px; align-items: center;
+      min-height: 28px;
+    }
+
+    .demo-bm-item {
+      font-size: 10px; padding: 3px 8px; border-radius: 4px;
+      background: white; border: 1px solid #ddd;
+      color: #444; white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .demo-bm-item.highlight {
+      background: var(--primary); color: white;
+      border-color: var(--primary); transform: scale(0.93);
+    }
+
+    /* Screen container */
+    .demo-screens {
+      position: relative; height: 160px; overflow: hidden;
+    }
+
+    .demo-screen {
+      position: absolute; inset: 0; padding: 12px;
+      opacity: 0; transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .demo-screen.active { opacity: 1; }
+
+    /* Screen 0 — PromptBar */
+    .ds0-header {
+      font-size: 11px; font-weight: 700; color: var(--dark);
+      margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+    }
+
+    .ds0-card {
+      border: 1px solid var(--border); border-radius: 7px;
+      padding: 9px 10px; background: #fafafa;
+    }
+
+    .ds0-title  { font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+    .ds0-desc   { font-size: 10px; color: var(--text-secondary); margin-bottom: 8px; }
+    .ds0-footer { display: flex; gap: 6px; }
+
+    .ds0-drag-btn {
+      font-size: 10px; padding: 4px 10px; border-radius: 5px;
+      background: var(--dark); color: white; border: none;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    .ds0-copy-btn {
+      font-size: 10px; padding: 4px 8px; border-radius: 5px;
+      background: white; border: 1px solid var(--border); color: #777;
+    }
+
+    /* Cursor */
+    .demo-cursor-el {
+      position: absolute; pointer-events: none;
+      transition: top 0.6s cubic-bezier(.4,0,.2,1), left 0.6s cubic-bezier(.4,0,.2,1);
+      z-index: 10;
+    }
+
+    .demo-cursor-el svg path { transition: fill 0.2s; }
+
+    /* Screen 1 — Drag */
+    .ds1-arrow {
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 4px; gap: 6px;
+    }
+
+    .ds1-item {
+      font-size: 11px; padding: 5px 12px; border-radius: 5px;
+      background: var(--dark); color: white;
+      display: inline-flex; align-items: center; gap: 5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.2);
+      animation: drag-float 1.8s ease-in-out infinite;
+    }
+
+    @keyframes drag-float {
+      0%, 100% { transform: translateY(0);   }
+      50%       { transform: translateY(-6px); }
+    }
+
+    .ds1-path {
+      width: 2px; height: 40px; background: linear-gradient(to top, #ddd, var(--primary));
+      border-radius: 2px; position: relative;
+    }
+
+    .ds1-path::before {
+      content: ''; position: absolute; top: -5px; left: -4px;
+      border-left: 5px solid transparent; border-right: 5px solid transparent;
+      border-bottom: 8px solid var(--primary);
+    }
+
+    .ds1-target {
+      font-size: 10px; color: var(--primary); font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Screen 2 — Gemini empty */
+    .ds2-label {
+      font-size: 10px; color: #aaa; margin-bottom: 6px;
+    }
+
+    .ds2-input {
+      background: white; border: 1px solid #e0e0e0;
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 11px; color: #ccc; min-height: 62px;
+      line-height: 1.5;
+    }
+
+    .ds2-hint {
+      font-size: 10px; color: var(--primary); margin-top: 8px;
+      font-weight: 500; text-align: center;
+      animation: pulse-hint 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse-hint { from { opacity: 0.6; } to { opacity: 1; } }
+
+    /* Screen 3 — Prompt injected */
+    .ds3-input {
+      background: white; border: 1px solid var(--primary);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 10.5px; color: var(--text);
+      min-height: 62px; line-height: 1.6;
+    }
+
+    .ds3-typed {
+      display: inline; overflow: hidden;
+      white-space: pre-wrap; max-width: 0;
+      animation: type-reveal 3s steps(55, end) forwards;
+    }
+
+    .ds3-typed::before {
+      content: "You are a Technical Account Manager.\AReply to the customer email below.\A\AInput: ";
+    }
+
+    @keyframes type-reveal {
+      0%   { max-width: 0; }
+      100% { max-width: 260px; }
+    }
+
+    .ds3-cur {
+      color: var(--primary);
+      animation: blink-cur 0.7s step-end infinite;
+    }
+
+    @keyframes blink-cur { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Footer */
+    .demo-footer {
+      border-top: 1px solid var(--border); padding: 8px 12px;
+      display: flex; align-items: center; gap: 10px;
+      background: #fafafa;
+    }
+
+    .demo-step-dots { display: flex; gap: 5px; flex-shrink: 0; }
+
+    .demo-step-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #ddd; transition: background 0.3s;
+    }
+
+    .demo-step-dot.active { background: var(--primary); }
+
+    .demo-step-lbl {
+      font-size: 10px; color: var(--text-secondary); flex: 1;
+    }
 
     /* ── Search ── */
     .search-wrap {
@@ -217,6 +412,15 @@
       font-size: 12px; color: var(--text-secondary);
       background: white; border: 1px solid var(--border);
       padding: 3px 10px; border-radius: 20px;
+    }
+
+    .section-collapsible { cursor: pointer; }
+    .section-collapsible:hover .section-title { color: var(--primary); }
+
+    .section-chevron {
+      width: 14px; height: 14px; flex-shrink: 0;
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
     }
 
     /* ── Template Grid ── */
@@ -359,17 +563,6 @@
 
     .import-btn svg, .export-btn svg { width: 13px; height: 13px; }
 
-    /* ── Small category-level buttons ── */
-    .cat-btn {
-      font-size: 11px; font-weight: 500; padding: 5px 10px;
-      border-radius: 5px; cursor: pointer; font-family: inherit;
-      display: inline-flex; align-items: center; gap: 5px;
-      background: white; border: 1px solid var(--border);
-      color: var(--text-secondary); transition: all 0.15s;
-    }
-
-    .cat-btn:hover { border-color: var(--primary); color: var(--primary); }
-    .cat-btn svg { width: 11px; height: 11px; }
 
     /* ── Divider ── */
     .section-divider {
@@ -589,22 +782,112 @@
 <main>
 
   <!-- Hero intro -->
-  <div style="margin-bottom:28px;">
-    <h1 style="font-size:22px; font-weight:700; color:var(--dark); margin-bottom:8px; letter-spacing:-0.3px;">Your AI Prompt Library</h1>
-    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; max-width:560px; margin-bottom:14px;">
-      Built for organisations where Chrome extensions are blocked. One click injects any prompt into Gemini, ChatGPT or Claude — no install, no server, no account.
-    </p>
-    <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">
-      No extension &nbsp;·&nbsp; No account &nbsp;·&nbsp; Everything stays local &nbsp;·&nbsp; No IT approval
-    </p>
-    <p style="font-size:12px; color:var(--text-secondary);">
-      Built by <strong style="color:var(--dark);">Rakesh Pawali</strong> &nbsp;·&nbsp; <span style="color:var(--primary); font-weight:500;">57 prompts across 8 personas</span>
-    </p>
+  <div style="display:flex; align-items:center; gap:40px; margin-bottom:28px; flex-wrap:wrap;">
+
+    <!-- Left: text -->
+    <div style="flex:1; min-width:260px;">
+      <h1 style="font-size:22px; font-weight:700; color:var(--dark); margin-bottom:8px; letter-spacing:-0.3px;">Your AI Prompt Library</h1>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; max-width:460px; margin-bottom:12px;">
+        Built for organisations where Chrome extensions are blocked. One click injects any prompt into Gemini, ChatGPT or Claude — no install, no server, no account.
+      </p>
+      <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">
+        No extension &nbsp;·&nbsp; No account &nbsp;·&nbsp; Everything stays local &nbsp;·&nbsp; No IT approval
+      </p>
+      <p style="font-size:12px; color:var(--text-secondary);">
+        Built by <strong style="color:var(--dark);">Rakesh Pawali</strong>
+      </p>
+    </div>
+
+    <!-- Right: animated demo -->
+    <div class="demo-card" id="demo-card">
+
+      <!-- Browser chrome -->
+      <div class="demo-chrome">
+        <div class="demo-dots">
+          <span class="demo-dot" style="background:#ff5f57"></span>
+          <span class="demo-dot" style="background:#febc2e;margin:0 4px;"></span>
+          <span class="demo-dot" style="background:#28c840"></span>
+        </div>
+        <div class="demo-url-bar" id="demo-url-bar">promptbar.app</div>
+      </div>
+
+      <!-- Bookmarks bar -->
+      <div class="demo-bm-bar" id="demo-bm-bar">
+        <div class="demo-bm-item" id="demo-bm-bookmark" style="opacity:0;">&#9646; TAM Reply</div>
+      </div>
+
+      <!-- Screens -->
+      <div class="demo-screens">
+
+        <!-- Screen 0: PromptBar browse -->
+        <div class="demo-screen active" id="ds-0">
+          <div class="ds0-header">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            PromptBar
+          </div>
+          <div class="ds0-card">
+            <div class="ds0-title">TAM — Customer Email Reply</div>
+            <div class="ds0-desc">Reply to a customer query as a TAM</div>
+            <div class="ds0-footer">
+              <div class="ds0-drag-btn" id="ds0-drag-btn">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                TAM Reply
+              </div>
+              <div class="ds0-copy-btn">Copy</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 1: Drag to bookmarks -->
+        <div class="demo-screen" id="ds-1">
+          <div class="ds1-arrow">
+            <div class="ds1-target">Drop to bookmarks bar</div>
+            <div class="ds1-path"></div>
+            <div class="ds1-item">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              TAM Reply
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Gemini — empty, bookmark visible -->
+        <div class="demo-screen" id="ds-2">
+          <div class="ds2-label">Ask Gemini a question</div>
+          <div class="ds2-input">|</div>
+          <div class="ds2-hint">↑ Click TAM Reply in bookmarks bar</div>
+        </div>
+
+        <!-- Screen 3: Prompt injected -->
+        <div class="demo-screen" id="ds-3">
+          <div class="ds2-label">Ask Gemini a question</div>
+          <div class="ds3-input" id="ds3-input">
+            <span class="ds3-typed" id="ds3-typed"></span><span class="ds3-cur">|</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="demo-footer">
+        <div class="demo-step-dots">
+          <div class="demo-step-dot active" id="dd-0"></div>
+          <div class="demo-step-dot" id="dd-1"></div>
+          <div class="demo-step-dot" id="dd-2"></div>
+          <div class="demo-step-dot" id="dd-3"></div>
+        </div>
+        <div class="demo-step-lbl" id="demo-step-lbl">Browse templates</div>
+      </div>
+
+    </div>
+
   </div>
 
   <!-- Setup -->
-  <div class="setup-banner">
-    <div class="setup-title">One-time Setup</div>
+  <div class="setup-banner" id="setup-banner">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <div class="setup-title" style="margin-bottom:0;">One-time Setup</div>
+      <button onclick="dismissSetup()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--text-secondary);line-height:1;padding:2px 4px;" title="Dismiss">✕</button>
+    </div>
     <div class="setup-steps">
       <div class="step">
         <div class="step-num">1</div>
@@ -741,6 +1024,9 @@
           <option value="Sales">Sales</option>
           <option value="Customer Success">Customer Success</option>
           <option value="Technical Account Management">Technical Account Management</option>
+          <option value="Engineering Manager">Engineering Manager</option>
+          <option value="HR &amp; People">HR &amp; People</option>
+          <option value="Legal">Legal</option>
           <option value="Marketing">Marketing</option>
           <option value="General">General</option>
         </select>
@@ -1060,6 +1346,111 @@
       desc: "Summarise competitive intelligence into a clear comparison.",
       prompt: "[ROLE]    You are a product marketing manager.\n[TASK]    Summarise the competitive information below into a clear comparison.\n[STYLE]   Objective, factual, no hyperbole.\n[FORMAT]  Comparison table: Feature/Dimension vs competitors. Follow with a 2-3 sentence positioning recommendation.\n[INPUT]   "
     },
+    // Engineering Manager
+    {
+      title: "Performance Review",
+      tag: "People", group: "Engineering Manager",
+      desc: "Write a structured performance review for a direct report.",
+      prompt: "[ROLE]    You are an Engineering Manager writing a formal performance review.\n[TASK]    Write a structured performance review for the team member based on the notes below.\n[STYLE]   Honest, constructive, and specific. Balance strengths with areas for growth. No vague praise.\n[FORMAT]  Sections: Overall Summary, Key Strengths (3-4 bullets), Areas for Development (2-3 bullets), Goals for Next Period.\n[INPUT]   "
+    },
+    {
+      title: "Incident Postmortem",
+      tag: "Incidents", group: "Engineering Manager",
+      desc: "Write a structured blameless postmortem from incident notes.",
+      prompt: "[ROLE]    You are an Engineering Manager writing a post-incident review.\n[TASK]    Write a structured postmortem based on the incident details below.\n[STYLE]   Blameless, factual, focused on systems not individuals.\n[FORMAT]  Sections: Incident Summary, Timeline, Root Cause, Impact, What Went Well, What Went Wrong, Action Items (owner + task).\n[INPUT]   "
+    },
+    {
+      title: "Engineering Roadmap Update",
+      tag: "Communication", group: "Engineering Manager",
+      desc: "Communicate a technical roadmap update to non-technical stakeholders.",
+      prompt: "[ROLE]    You are an Engineering Manager presenting a roadmap update to business stakeholders.\n[TASK]    Write a roadmap update based on the technical notes below. Translate technical work into business outcomes.\n[STYLE]   Clear, outcome-focused. No technical jargon. Confident.\n[FORMAT]  Sections: What We Delivered, What We Are Building Next, Known Risks, What We Need from Stakeholders.\n[INPUT]   "
+    },
+    {
+      title: "Hiring Brief",
+      tag: "Hiring", group: "Engineering Manager",
+      desc: "Write a clear internal hiring brief for a new engineering role.",
+      prompt: "[ROLE]    You are an Engineering Manager writing an internal hiring brief.\n[TASK]    Write a hiring brief for the engineering role described below.\n[STYLE]   Specific, honest about the team context, realistic about requirements.\n[FORMAT]  Sections: Role Summary, Why This Role Exists, Key Responsibilities (5-6 bullets), Must-Have Skills, Nice-to-Have, Team Context.\n[INPUT]   "
+    },
+    {
+      title: "1-1 Agenda",
+      tag: "Meetings", group: "Engineering Manager",
+      desc: "Create a structured 1-1 agenda based on current context.",
+      prompt: "[ROLE]    You are an Engineering Manager preparing for a 1-1 meeting.\n[TASK]    Create a structured 1-1 agenda based on the context and open topics below.\n[STYLE]   Conversational, focused. Prioritise the report's topics over manager updates.\n[FORMAT]  Sections: Check-in (1-2 questions), Their Topics, Manager Updates, Action Items from Last Meeting.\n[INPUT]   "
+    },
+    {
+      title: "Team Announcement",
+      tag: "Communication", group: "Engineering Manager",
+      desc: "Write a clear team announcement for a change, decision, or update.",
+      prompt: "[ROLE]    You are an Engineering Manager writing a team communication.\n[TASK]    Write a team announcement based on the update or decision below.\n[STYLE]   Direct, transparent, and human. Acknowledge impact on the team where relevant.\n[FORMAT]  Short paragraphs. Lead with what is changing, then why, then what it means for the team.\n[INPUT]   "
+    },
+    // HR & People
+    {
+      title: "Job Description",
+      tag: "Hiring", group: "HR & People",
+      desc: "Write a clear, inclusive job description from a role brief.",
+      prompt: "[ROLE]    You are a senior HR Business Partner.\n[TASK]    Write a job description for the role described below.\n[STYLE]   Clear, inclusive, and appealing. Avoid jargon and gendered language.\n[FORMAT]  Sections: About the Role, What You'll Do (5-6 bullets), What We're Looking For (5-6 bullets), Nice to Have (3 bullets).\n[INPUT]   "
+    },
+    {
+      title: "Candidate Rejection Email",
+      tag: "Hiring", group: "HR & People",
+      desc: "Write a warm, respectful rejection email to an unsuccessful candidate.",
+      prompt: "[ROLE]    You are an HR professional sending a rejection email.\n[TASK]    Write a rejection email to the candidate based on the context below.\n[STYLE]   Warm, respectful, and specific enough to feel personal. Not a template.\n[FORMAT]  3-4 sentences. Thank them, deliver the news clearly, leave the door open.\n[INPUT]   "
+    },
+    {
+      title: "Performance Improvement Plan",
+      tag: "Performance", group: "HR & People",
+      desc: "Draft a structured performance improvement plan from manager notes.",
+      prompt: "[ROLE]    You are an HR Business Partner drafting a performance improvement plan.\n[TASK]    Write a structured PIP based on the performance issues and context below.\n[STYLE]   Professional, clear, and constructive. Focus on behaviours and outcomes, not personality.\n[FORMAT]  Sections: Background, Performance Concerns (specific examples), Expected Standards, Support Provided, Timeline and Review Points, Consequences.\n[INPUT]   "
+    },
+    {
+      title: "Policy Announcement",
+      tag: "Comms", group: "HR & People",
+      desc: "Write a company-wide policy announcement that people will actually read.",
+      prompt: "[ROLE]    You are an HR professional writing a company-wide policy communication.\n[TASK]    Write an announcement for the policy or change described below.\n[STYLE]   Clear, human, and direct. Lead with what changes and when, not the backstory.\n[FORMAT]  Short intro paragraph, bullet points for key changes, who it affects, effective date, who to contact with questions.\n[INPUT]   "
+    },
+    {
+      title: "Exit Interview Summary",
+      tag: "Retention", group: "HR & People",
+      desc: "Summarise exit interview notes into structured themes and actions.",
+      prompt: "[ROLE]    You are an HR Business Partner summarising an exit interview.\n[TASK]    Summarise the exit interview notes below into a structured internal report.\n[STYLE]   Neutral, factual. No editorialising.\n[FORMAT]  Sections: Reason for Leaving, Key Themes (bullets), Manager/Team Feedback, Retention Flags, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      title: "Offer Letter Email",
+      tag: "Hiring", group: "HR & People",
+      desc: "Write a warm, professional offer letter email to a selected candidate.",
+      prompt: "[ROLE]    You are an HR professional sending a job offer email.\n[TASK]    Write a job offer email based on the role and candidate details below.\n[STYLE]   Warm and professional. Make the candidate feel genuinely excited.\n[FORMAT]  Opening (congratulations), role and start date, key terms summary, next steps, warm close.\n[INPUT]   "
+    },
+    // Legal
+    {
+      title: "Contract Summary",
+      tag: "Review", group: "Legal",
+      desc: "Summarise a contract into plain language key points for non-legal stakeholders.",
+      prompt: "[ROLE]    You are a legal professional summarising contracts for business stakeholders.\n[TASK]    Summarise the contract or agreement below into plain language key points.\n[STYLE]   Clear, objective, no legalese. Written for a non-lawyer.\n[FORMAT]  Sections: Parties Involved, Key Obligations (each party), Important Dates and Deadlines, Risks or Unusual Clauses, Recommended Actions.\n[INPUT]   "
+    },
+    {
+      title: "NDA Key Points",
+      tag: "Review", group: "Legal",
+      desc: "Extract the key points and obligations from a non-disclosure agreement.",
+      prompt: "[ROLE]    You are a legal professional reviewing an NDA.\n[TASK]    Extract and summarise the key points from the NDA below.\n[STYLE]   Plain English. Flag anything unusual or one-sided.\n[FORMAT]  Sections: What is Confidential, Obligations of Each Party, Duration, Exclusions, Termination, Any Red Flags.\n[INPUT]   "
+    },
+    {
+      title: "Compliance Notice",
+      tag: "Compliance", group: "Legal",
+      desc: "Write a clear compliance notice for internal audiences.",
+      prompt: "[ROLE]    You are a legal or compliance professional writing an internal communication.\n[TASK]    Write a compliance notice based on the regulation or policy requirement below.\n[STYLE]   Clear and authoritative but not intimidating. Avoid dense legal language.\n[FORMAT]  What the requirement is, who it applies to, what action is needed, by when, consequences of non-compliance, contact for questions.\n[INPUT]   "
+    },
+    {
+      title: "Legal Risk Summary",
+      tag: "Risk", group: "Legal",
+      desc: "Summarise legal risks in a proposal or situation for a non-legal audience.",
+      prompt: "[ROLE]    You are a legal advisor summarising risks for a business stakeholder.\n[TASK]    Summarise the legal risks in the situation or document below.\n[STYLE]   Direct and objective. Prioritise the risks by severity. No unnecessary hedging.\n[FORMAT]  Risk summary table: Risk, Likelihood (High/Medium/Low), Business Impact, Mitigation Recommendation.\n[INPUT]   "
+    },
+    {
+      title: "Terms of Service Summary",
+      tag: "Review", group: "Legal",
+      desc: "Summarise a Terms of Service or Privacy Policy into plain language.",
+      prompt: "[ROLE]    You are a legal professional summarising terms for a non-legal audience.\n[TASK]    Summarise the Terms of Service or Privacy Policy below into plain language.\n[STYLE]   Simple and direct. Highlight anything users should pay attention to.\n[FORMAT]  Sections: What the Service Does with Your Data, Your Rights, What You Agree To, What They Can Change, How to Cancel or Delete.\n[INPUT]   "
+    },
     // Technical Account Management
     {
       title: "Customer Email Reply",
@@ -1124,8 +1515,9 @@
   ];
 
   const PERSONAS = ['All', ...new Set(TEMPLATES.map(t => t.group))];
-  let currentPersona = 'All';
+  let currentPersona = 'Everyday';
   let searchQuery = '';
+  const sectionStates = {}; // group -> true (expanded) | false (collapsed)
 
   // ── Helpers ───────────────────────────────────────────────────────
   function escHtml(s) {
@@ -1241,7 +1633,7 @@
           <a class="bookmark-btn" href="${makeBookmarkletHref(t.prompt)}" title="Drag to bookmarks bar">${BOOKMARK_ICON} ${t.title}</a>
           <button class="copy-btn" data-custom-copy-idx="${i}" onclick="copyCustomPromptText(${i})" title="Copy prompt text">${COPY_ICON} Copy</button>
           <button class="edit-btn" onclick="editCustomPrompt(${i})" title="Edit">${EDIT_ICON} Edit</button>
-          <button class="delete-btn" onclick="deleteCustomPrompt(${i})" title="Delete">${DELETE_ICON}</button>
+          <button class="delete-btn" onclick="confirmDelete(this,${i})" title="Delete">${DELETE_ICON}</button>
         </div>
       </div>`;
   }
@@ -1251,6 +1643,7 @@
     searchQuery = val.trim().toLowerCase();
     document.getElementById('search-clear').style.display = val ? 'flex' : 'none';
     renderTemplates();
+    renderCustomPrompts();
   }
 
   function clearSearch() {
@@ -1287,33 +1680,35 @@
     URL.revokeObjectURL(url);
   }
 
-  function catBtns(group, isCustom) {
-    const sl = slugify(group);
-    const inputId = `import-cat-${sl}`;
-    const importFn = isCustom ? `importToCustomCategory('${group}',this)` : `importToBuiltInCategory('${group}',this)`;
-    const exportFn = isCustom ? `exportCustomCategory('${group}')` : `exportCategory('${group}')`;
-    return `
-      <div style="display:flex;gap:6px;align-items:center;">
-        <button class="cat-btn" onclick="document.getElementById('${inputId}').click()" title="Import more ${group} prompts">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Import
-        </button>
-        <button class="cat-btn" onclick="${exportFn}" title="Export ${group} prompts as JSON">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Export
-        </button>
-        <input type="file" id="${inputId}" accept=".json" style="display:none" onchange="${importFn}">
-      </div>`;
+  function isCollapsible(isCustom) {
+    return currentPersona === 'All' || isCustom;
+  }
+
+  function toggleSection(group, isCustom) {
+    sectionStates[group] = !sectionStates[group];
+    if (isCustom) renderCustomPrompts();
+    else renderTemplates();
   }
 
   function sectionHeader(group, count, isCustom, gi) {
+    const collapsible = isCollapsible(isCustom);
+    const expanded = sectionStates[group] === true;
+    const chevron = collapsible ? `
+      <svg class="section-chevron" style="transform:${expanded ? 'rotate(180deg)' : 'rotate(0deg)'}"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>` : '';
+
     return `
-      <div class="section-header" style="${gi > 0 ? 'margin-top:36px;' : ''}">
-        <div style="display:flex;align-items:center;gap:10px;">
+      <div class="section-header ${collapsible ? 'section-collapsible' : ''}"
+           style="${gi > 0 ? 'margin-top:36px;' : ''}"
+           ${collapsible ? `onclick="toggleSection('${group}',${isCustom})"` : ''}>
+        <div style="display:flex;align-items:center;gap:8px;">
+          ${chevron}
           <h2 class="section-title">${group}</h2>
           <span class="section-count">${count} templates</span>
         </div>
-        ${catBtns(group, isCustom)}
       </div>`;
   }
 
@@ -1349,10 +1744,14 @@
       groups[t.group].push({ t, i });
     });
 
-    container.innerHTML = Object.entries(groups).map(([g, items], gi) => `
-      ${sectionHeader(g, items.length, false, gi)}
-      <div class="templates-grid">${items.map(({ t, i }) => builtInCardHTML(t, i)).join('')}</div>
-    `).join('');
+    container.innerHTML = Object.entries(groups).map(([g, items], gi) => {
+      const collapsible = isCollapsible(false);
+      const expanded = !collapsible || sectionStates[g] === true;
+      return `
+        ${sectionHeader(g, items.length, false, gi)}
+        ${expanded ? `<div class="templates-grid">${items.map(({ t, i }) => builtInCardHTML(t, i)).join('')}</div>` : ''}
+      `;
+    }).join('');
   }
 
   // ── localStorage ──────────────────────────────────────────────────
@@ -1375,29 +1774,69 @@
     showToast('Prompt deleted');
   }
 
+  function confirmDelete(btn, idx) {
+    if (btn.dataset.confirming === 'true') {
+      deleteCustomPrompt(idx);
+      return;
+    }
+    btn.dataset.confirming = 'true';
+    btn.style.borderColor = '#ef4444';
+    btn.style.color = '#ef4444';
+    btn.innerHTML = '<span style="font-size:11px;font-weight:600;padding:0 2px;">Sure?</span>';
+    setTimeout(() => {
+      if (btn.dataset.confirming === 'true') {
+        btn.dataset.confirming = 'false';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.innerHTML = `${DELETE_ICON}`;
+      }
+    }, 3000);
+  }
+
   function renderCustomPrompts() {
-    const prompts = loadCustomPrompts();
+    const allPrompts = loadCustomPrompts();
     const grid = document.getElementById('my-templates-grid');
     const count = document.getElementById('my-template-count');
-    count.textContent = `${prompts.length} saved`;
+    count.textContent = `${allPrompts.length} saved`;
 
-    if (!prompts.length) {
+    if (!allPrompts.length) {
       grid.innerHTML = `<div class="empty-state">No saved prompts yet. Add your own below or import a category.</div>`;
+      return;
+    }
+
+    // Apply search filter — preserve original index for edit/delete
+    let items = allPrompts.map((t, i) => ({ t, i }));
+
+    if (searchQuery) {
+      items = items.filter(({ t }) =>
+        `${t.title} ${t.desc} ${t.tag} ${t.group} ${t.prompt}`.toLowerCase().includes(searchQuery));
+
+      if (!items.length) {
+        grid.innerHTML = `<div class="empty-state">No saved prompts matching "<strong>${escHtml(searchQuery)}</strong>"</div>`;
+        return;
+      }
+
+      grid.innerHTML = `
+        <p class="search-results-label">${items.length} saved result${items.length > 1 ? 's' : ''} for "<strong>${escHtml(searchQuery)}</strong>"</p>
+        <div class="templates-grid">${items.map(({ t, i }) => customCardHTML(t, i)).join('')}</div>`;
       return;
     }
 
     // Group by persona
     const groups = {};
-    prompts.forEach((t, i) => {
+    items.forEach(({ t, i }) => {
       const g = t.group || 'Custom';
       if (!groups[g]) groups[g] = [];
       groups[g].push({ t, i });
     });
 
-    grid.innerHTML = Object.entries(groups).map(([g, items], gi) => `
-      ${sectionHeader(g, items.length, true, gi)}
-      <div class="templates-grid">${items.map(({ t, i }) => customCardHTML(t, i)).join('')}</div>
-    `).join('');
+    grid.innerHTML = Object.entries(groups).map(([g, groupItems], gi) => {
+      const expanded = sectionStates[g] === true;
+      return `
+        ${sectionHeader(g, groupItems.length, true, gi)}
+        ${expanded ? `<div class="templates-grid">${groupItems.map(({ t, i }) => customCardHTML(t, i)).join('')}</div>` : ''}
+      `;
+    }).join('');
   }
 
   // ── Import / Export ───────────────────────────────────────────────
@@ -1430,38 +1869,6 @@
       const groups = [...new Set(incoming.map(p => p.group).filter(Boolean))];
       showToast(`Imported ${incoming.length} prompt${incoming.length > 1 ? 's' : ''}${groups.length ? ' → ' + groups.join(', ') : ''}`);
     });
-  }
-
-  // Import into an existing built-in category (forces group to match section)
-  function importToBuiltInCategory(group, input) {
-    readJSON(input, data => {
-      const incoming = (Array.isArray(data) ? data : (data.prompts || [])).map(p => ({ ...p, group }));
-      if (!incoming.length) { showToast('No prompts found in file'); return; }
-      mergeIntoStorage(incoming);
-      showToast(`Imported ${incoming.length} prompt${incoming.length > 1 ? 's' : ''} into ${group}`);
-    });
-  }
-
-  // Import into an existing custom category (forces group to match section)
-  function importToCustomCategory(group, input) {
-    importToBuiltInCategory(group, input);
-  }
-
-  // Export a single built-in category
-  function exportCategory(group) {
-    const prompts = TEMPLATES.filter(t => t.group === group);
-    downloadJSON({ version: '1.0', tool: 'PromptBar', description: `${group} prompt pack`, prompts },
-      `${slugify(group)}.json`);
-    showToast(`Exported ${prompts.length} ${group} prompts`);
-  }
-
-  // Export a single custom category
-  function exportCustomCategory(group) {
-    const prompts = loadCustomPrompts().filter(t => (t.group || 'Custom') === group);
-    if (!prompts.length) { showToast('No prompts to export in this category'); return; }
-    downloadJSON({ version: '1.0', tool: 'PromptBar', description: `${group} prompt pack`, prompts },
-      `${slugify(group)}.json`);
-    showToast(`Exported ${prompts.length} ${group} prompts`);
   }
 
   // Export all custom prompts
@@ -1543,9 +1950,67 @@
   }
 
   // ── Init ──────────────────────────────────────────────────────────
+  function dismissSetup() {
+    document.getElementById('setup-banner').style.display = 'none';
+    localStorage.setItem('promptbar_setup_dismissed', '1');
+  }
+
   renderTabs();
   renderTemplates();
   renderCustomPrompts();
+
+  if (localStorage.getItem('promptbar_setup_dismissed')) {
+    document.getElementById('setup-banner').style.display = 'none';
+  }
+
+  // ── Demo animation controller ─────────────────────────────────────
+  (function () {
+    const screens  = [0,1,2,3].map(i => document.getElementById('ds-' + i));
+    const dots     = [0,1,2,3].map(i => document.getElementById('dd-' + i));
+    const lbl      = document.getElementById('demo-step-lbl');
+    const urlBar   = document.getElementById('demo-url-bar');
+    const bmBar    = document.getElementById('demo-bm-bookmark');
+    const bmItem   = document.getElementById('demo-bm-bookmark');
+    const typed    = document.getElementById('ds3-typed');
+
+    const labels   = ['Browse templates', 'Drag to bookmarks bar', 'Open Gemini — click the bookmark', 'Prompt injected instantly'];
+    const urls     = ['promptbar.app', 'promptbar.app', 'gemini.google.com', 'gemini.google.com'];
+    const durations = [2800, 2200, 2200, 3800];
+
+    let step = 0;
+
+    function goTo(next) {
+      // Outgoing
+      screens[step].classList.remove('active');
+      dots[step].classList.remove('active');
+      step = next % 4;
+      // Incoming
+      screens[step].classList.add('active');
+      dots[step].classList.add('active');
+      lbl.textContent = labels[step];
+      urlBar.textContent = urls[step];
+
+      // Show bookmark in bar from step 1 onward
+      bmItem.style.opacity = step >= 1 ? '1' : '0';
+
+      // Highlight bookmark on step 2
+      if (step === 2) {
+        setTimeout(() => bmItem.classList.add('highlight'), 800);
+        setTimeout(() => bmItem.classList.remove('highlight'), 1400);
+      }
+
+      // Re-trigger typing animation on step 3
+      if (step === 3) {
+        typed.style.animation = 'none';
+        typed.offsetHeight; // reflow
+        typed.style.animation = '';
+      }
+
+      setTimeout(() => goTo(step + 1), durations[step]);
+    }
+
+    setTimeout(() => goTo(1), durations[0]);
+  })();
 
   // Cmd+K / Ctrl+K focuses search
   document.addEventListener('keydown', e => {
