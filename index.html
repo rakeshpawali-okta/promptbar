@@ -533,6 +533,47 @@
       border-radius: 10px;
     }
 
+    /* ── Shared Pack Banner ── */
+    .shared-pack-banner {
+      background: white; border: 1px solid var(--border);
+      border-left: 4px solid #7c3aed;
+      border-radius: 10px; padding: 18px 22px;
+      margin-bottom: 24px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+
+    .shared-pack-banner-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 3px; }
+    .shared-pack-banner-sub  { font-size: 12px; color: var(--text-secondary); }
+
+    .shared-pack-import-btn {
+      background: #7c3aed; color: white; border: none;
+      padding: 9px 18px; border-radius: 6px; font-size: 13px;
+      font-weight: 500; cursor: pointer; font-family: inherit;
+      white-space: nowrap; transition: background 0.15s;
+    }
+    .shared-pack-import-btn:hover { background: #6d28d9; }
+
+    .shared-pack-dismiss-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-secondary); padding: 9px 14px;
+      border-radius: 6px; font-size: 13px; cursor: pointer;
+      font-family: inherit; white-space: nowrap; transition: all 0.15s;
+    }
+    .shared-pack-dismiss-btn:hover { border-color: #ef4444; color: #ef4444; }
+
+    /* ── Share Pack button (section headers) ── */
+    .share-pack-btn {
+      font-size: 11px; font-weight: 500; padding: 5px 12px;
+      border-radius: 6px; border: 1px solid var(--border);
+      background: white; color: var(--text-secondary);
+      cursor: pointer; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 5px;
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .share-pack-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+    .share-pack-btn svg { width: 12px; height: 12px; }
+
     /* ── My Templates header ── */
     .my-templates-header {
       display: flex; align-items: center;
@@ -782,6 +823,18 @@
 
 <main>
 
+  <!-- Shared Pack Import Banner -->
+  <div id="shared-pack-banner" class="shared-pack-banner" style="display:none;">
+    <div>
+      <div class="shared-pack-banner-title" id="shared-pack-title">Shared prompt pack</div>
+      <div class="shared-pack-banner-sub" id="shared-pack-sub">Someone shared a prompt pack with you.</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;">
+      <button class="shared-pack-import-btn" onclick="importSharedPack()">Import to My Templates</button>
+      <button class="shared-pack-dismiss-btn" onclick="dismissSharedBanner()">Dismiss</button>
+    </div>
+  </div>
+
   <!-- Hero intro -->
   <div style="display:flex; align-items:center; gap:40px; margin-bottom:28px; flex-wrap:wrap;">
 
@@ -963,6 +1016,13 @@
             <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
           Import Category
+        </button>
+        <button class="export-btn" onclick="shareCustomPack()" title="Copy a shareable link for all saved prompts" style="background:#7c3aed;border-color:#7c3aed;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+          Share Link
         </button>
         <button class="export-btn" onclick="exportAllCustom()" title="Export all saved prompts as JSON">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1701,6 +1761,12 @@
         <polyline points="6 9 12 15 18 9"/>
       </svg>` : '';
 
+    const shareBtn = !isCustom ? `
+      <button class="share-pack-btn" onclick="shareBuiltInPack('${group}',event)" title="Copy share link for this pack">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share Pack
+      </button>` : '';
+
     return `
       <div class="section-header ${collapsible ? 'section-collapsible' : ''}"
            style="${gi > 0 ? 'margin-top:36px;' : ''}"
@@ -1710,6 +1776,7 @@
           <h2 class="section-title">${group}</h2>
           <span class="section-count">${count} templates</span>
         </div>
+        ${shareBtn}
       </div>`;
   }
 
@@ -1950,6 +2017,61 @@
     ['prompt-name','prompt-tag','prompt-text'].forEach(id => document.getElementById(id).value = '');
   }
 
+  // ── Shareable Pack URL ──────────────────────────────────────────────
+  function encodePackToURL(prompts, packName) {
+    const data = { name: packName, prompts };
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    return `${location.origin}${location.pathname}?pack=${encoded}`;
+  }
+
+  function decodePackFromURL() {
+    try {
+      const raw = new URLSearchParams(location.search).get('pack');
+      if (!raw) return null;
+      return JSON.parse(decodeURIComponent(escape(atob(raw))));
+    } catch { return null; }
+  }
+
+  let _sharedPackData = null;
+
+  function showSharedPackBanner(data) {
+    _sharedPackData = data;
+    const count = (data.prompts || []).length;
+    const name  = data.name || 'Shared Pack';
+    document.getElementById('shared-pack-title').textContent = `${count} prompt${count !== 1 ? 's' : ''} shared with you — ${name}`;
+    document.getElementById('shared-pack-sub').textContent   = 'Click Import to add them to My Templates. They stay local in your browser.';
+    document.getElementById('shared-pack-banner').style.display = 'flex';
+  }
+
+  function importSharedPack() {
+    if (!_sharedPackData) return;
+    const incoming = _sharedPackData.prompts || [];
+    if (!incoming.length) { showToast('No prompts found in this pack'); return; }
+    mergeIntoStorage(incoming);
+    showToast(`Imported ${incoming.length} prompt${incoming.length > 1 ? 's' : ''}`);
+    dismissSharedBanner();
+  }
+
+  function dismissSharedBanner() {
+    document.getElementById('shared-pack-banner').style.display = 'none';
+    _sharedPackData = null;
+    history.replaceState(null, '', location.pathname);
+  }
+
+  function shareBuiltInPack(group, e) {
+    e.stopPropagation();
+    const prompts = TEMPLATES.filter(t => t.group === group);
+    const url = encodePackToURL(prompts, group);
+    navigator.clipboard.writeText(url).then(() => showToast(`Share link copied — ${prompts.length} prompts`));
+  }
+
+  function shareCustomPack() {
+    const prompts = loadCustomPrompts();
+    if (!prompts.length) { showToast('No saved prompts to share'); return; }
+    const url = encodePackToURL(prompts, 'My Templates');
+    navigator.clipboard.writeText(url).then(() => showToast(`Share link copied — ${prompts.length} prompts`));
+  }
+
   // ── Init ──────────────────────────────────────────────────────────
   function dismissSetup() {
     document.getElementById('setup-banner').style.display = 'none';
@@ -1959,6 +2081,11 @@
   renderTabs();
   renderTemplates();
   renderCustomPrompts();
+
+  const _sharedPack = decodePackFromURL();
+  if (_sharedPack && (_sharedPack.prompts || []).length) {
+    showSharedPackBanner(_sharedPack);
+  }
 
   if (localStorage.getItem('promptbar_setup_dismissed')) {
     document.getElementById('setup-banner').style.display = 'none';
