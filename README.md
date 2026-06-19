@@ -31,12 +31,20 @@ It works as a single HTML file — open it in your browser, drag a template to y
 
 ## How to Use
 
-1. Download `index.html` and open it in Chrome
-2. Press `Cmd+Shift+B` (Mac) or `Ctrl+Shift+B` (Windows) to show your bookmarks bar
-3. Drag any template button to your bookmarks bar
-4. Open Gemini / ChatGPT / Claude, click the text box, then click the bookmark
+**Option A — Visit the live site** *(easiest)*  
+Open [promptbar.vercel.app](https://promptbar.vercel.app) in Chrome.
+
+**Option B — Run locally**  
+Clone the repo and open `index.html` directly in Chrome.
+
+Then:
+1. Press `Cmd+Shift+B` (Mac) or `Ctrl+Shift+B` (Windows) to show your bookmarks bar
+2. Drag any template button to your bookmarks bar
+3. Open Gemini / ChatGPT / Claude, click the text box, then click the bookmark
 
 The prompt is injected instantly. Fill in `[INPUT]` and go.
+
+> **On mobile?** Bookmarklets don't work on mobile browsers. Use the **Copy** button instead and paste into your AI tool.
 
 ---
 
@@ -83,24 +91,29 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for full instr
 ## Repo Structure
 
 ```
-promptbar/
-├── index.html                          # The app — open this in your browser
-├── favicon.svg                         # Browser tab icon
-├── vercel.json                         # Deployment config
-├── og.svg                              # Social preview image
+├── index.html                             # The app — open this in your browser
+├── favicon.svg                            # Browser tab icon
+├── vercel.json                            # Deployment config
+├── og.svg                                 # Social preview image
 ├── prompts/
-│   ├── everyday.json                   # 20 everyday prompts
-│   ├── developer.json                  # 5 developer prompts
-│   ├── product-owner.json              # 5 product owner prompts
-│   ├── business-analyst.json           # 5 business analyst prompts
-│   ├── sales.json                      # 4 sales prompts
-│   ├── customer-success.json           # 4 customer success prompts
+│   ├── everyday.json                      # 20 everyday prompts
+│   ├── developer.json                     # 5 developer prompts
+│   ├── product-owner.json                 # 5 product owner prompts
+│   ├── business-analyst.json              # 5 business analyst prompts
+│   ├── sales.json                         # 4 sales prompts
+│   ├── customer-success.json              # 4 customer success prompts
 │   ├── technical-account-management.json  # 10 TAM prompts
-│   ├── engineering-manager.json        # 6 engineering manager prompts
-│   ├── hr-people.json                  # 6 HR & people prompts
-│   ├── legal.json                      # 5 legal prompts
-│   ├── marketing.json                  # 4 marketing prompts
-│   └── example.json                    # Example format for contributors
+│   ├── engineering-manager.json           # 6 engineering manager prompts
+│   ├── hr-people.json                     # 6 HR & people prompts
+│   ├── legal.json                         # 5 legal prompts
+│   ├── marketing.json                     # 4 marketing prompts
+│   └── example.json                       # Example format for contributors
+├── .github/
+│   ├── workflows/validate-prompts.yml     # Auto-validates JSON on every PR
+│   ├── PULL_REQUEST_TEMPLATE.md           # PR checklist for contributors
+│   └── ISSUE_TEMPLATE/
+│       ├── new-prompts.md                 # New prompt request template
+│       └── bug-report.md                 # Bug report template
 ├── README.md
 ├── CONTRIBUTING.md
 └── LICENSE
