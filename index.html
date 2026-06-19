@@ -1761,12 +1761,6 @@
         <polyline points="6 9 12 15 18 9"/>
       </svg>` : '';
 
-    const shareBtn = !isCustom ? `
-      <button class="share-pack-btn" onclick="shareBuiltInPack('${group}',event)" title="Copy share link for this pack">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        Share Pack
-      </button>` : '';
-
     return `
       <div class="section-header ${collapsible ? 'section-collapsible' : ''}"
            style="${gi > 0 ? 'margin-top:36px;' : ''}"
@@ -1776,7 +1770,6 @@
           <h2 class="section-title">${group}</h2>
           <span class="section-count">${count} templates</span>
         </div>
-        ${shareBtn}
       </div>`;
   }
 
@@ -2056,13 +2049,6 @@
     document.getElementById('shared-pack-banner').style.display = 'none';
     _sharedPackData = null;
     history.replaceState(null, '', location.pathname);
-  }
-
-  function shareBuiltInPack(group, e) {
-    e.stopPropagation();
-    const prompts = TEMPLATES.filter(t => t.group === group);
-    const url = encodePackToURL(prompts, group);
-    navigator.clipboard.writeText(url).then(() => showToast(`Share link copied — ${prompts.length} prompts`));
   }
 
   function shareCustomPack() {
