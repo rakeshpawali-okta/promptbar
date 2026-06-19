@@ -32,7 +32,7 @@ It works as a single HTML file — open it in your browser, drag a template to y
 ## How to Use
 
 **Option A — Visit the live site** *(easiest)*  
-Open [promptbar.vercel.app](https://promptbar.vercel.app) in Chrome.
+Open [promptbar-kappa.vercel.app](https://promptbar-kappa.vercel.app/) in Chrome.
 
 **Option B — Run locally**  
 Clone the repo and open `index.html` directly in Chrome.
