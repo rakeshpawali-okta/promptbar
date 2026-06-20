@@ -20,9 +20,11 @@ It works as a single HTML file — open it in your browser, drag a template to y
 
 - One-click prompt injection into Gemini, ChatGPT, and Claude
 - 74 built-in prompts across 11 personas
+- Guided prompt builder for creating structured prompts step by step
 - Filter by persona: Everyday, Developer, Product Owner, Business Analyst, Sales, Customer Success, Technical Account Management, Engineering Manager, HR & People, Legal, Marketing
 - Search across all prompts
 - Save your own prompts (stored in localStorage)
+- Share your own saved prompts with a shareable link
 - Export your prompts as JSON to share with your team
 - Import JSON prompt packs from others
 - No install, no account, no server
@@ -35,7 +37,14 @@ It works as a single HTML file — open it in your browser, drag a template to y
 Open [promptbar-kappa.vercel.app](https://promptbar-kappa.vercel.app/) in Chrome.
 
 **Option B — Run locally**  
-Clone the repo and open `index.html` directly in Chrome.
+Clone the repo, then run a simple static server from the `promptbar` folder:
+
+```bash
+cd promptbar
+python3 -m http.server 4173
+```
+
+Open `http://127.0.0.1:4173/` in Chrome.
 
 Then:
 1. Press `Cmd+Shift+B` (Mac) or `Ctrl+Shift+B` (Windows) to show your bookmarks bar
@@ -63,6 +72,11 @@ All prompts follow a structured format with five fields:
 ```
 
 The `[ROLE]`, `[TASK]`, `[STYLE]`, `[FORMAT]` labels are shown in the library for readability but are **automatically stripped before injection** so the AI receives clean instructions.
+
+You can create prompts in two ways:
+
+- Use the guided builder to generate a structured draft from a few inputs.
+- Use the manual form to write the full prompt yourself.
 
 ## Why This Structure Works
 
@@ -103,22 +117,25 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for full instr
 ## Repo Structure
 
 ```
-├── index.html                             # The app — open this in your browser
+├── index.html                             # App markup and landing page
+├── styles.css                             # App styles
+├── js/
+│   └── app.js                             # App logic, rendering, storage, builder, sharing
 ├── favicon.svg                            # Browser tab icon
 ├── vercel.json                            # Deployment config
 ├── og.svg                                 # Social preview image
 ├── prompts/
-│   ├── everyday.json                      # 20 everyday prompts
-│   ├── developer.json                     # 5 developer prompts
-│   ├── product-owner.json                 # 5 product owner prompts
-│   ├── business-analyst.json              # 5 business analyst prompts
-│   ├── sales.json                         # 4 sales prompts
-│   ├── customer-success.json              # 4 customer success prompts
-│   ├── technical-account-management.json  # 10 TAM prompts
-│   ├── engineering-manager.json           # 6 engineering manager prompts
-│   ├── hr-people.json                     # 6 HR & people prompts
-│   ├── legal.json                         # 5 legal prompts
-│   ├── marketing.json                     # 4 marketing prompts
+│   ├── everyday.json                      # Built-in everyday prompt pack
+│   ├── developer.json                     # Built-in developer prompt pack
+│   ├── product-owner.json                 # Built-in product owner prompt pack
+│   ├── business-analyst.json              # Built-in business analyst prompt pack
+│   ├── sales.json                         # Built-in sales prompt pack
+│   ├── customer-success.json              # Built-in customer success prompt pack
+│   ├── technical-account-management.json  # Built-in TAM prompt pack
+│   ├── engineering-manager.json           # Built-in engineering manager prompt pack
+│   ├── hr-people.json                     # Built-in HR & people prompt pack
+│   ├── legal.json                         # Built-in legal prompt pack
+│   ├── marketing.json                     # Built-in marketing prompt pack
 │   └── example.json                       # Example format for contributors
 ├── .github/
 │   ├── workflows/validate-prompts.yml     # Auto-validates JSON on every PR
