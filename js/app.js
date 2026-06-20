@@ -410,6 +410,7 @@
 
   function editBuiltInTemplate(i) {
     const t = TEMPLATES[i];
+    openManualForm();
     document.getElementById('prompt-name').value = t.title;
     document.getElementById('prompt-tag').value = t.tag;
     document.getElementById('prompt-persona').value = t.group;
@@ -422,6 +423,7 @@
 
   function editCustomPrompt(i) {
     const t = loadCustomPrompts()[i];
+    openManualForm();
     document.getElementById('prompt-name').value = t.title;
     document.getElementById('prompt-tag').value = t.tag || '';
     document.getElementById('prompt-persona').value = t.group || 'General';
@@ -436,6 +438,35 @@
     editingCustomIndex = null;
     setFormMode(false);
     ['prompt-name','prompt-tag','prompt-text'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  function openManualForm(scrollIntoView = false) {
+    const panel = document.getElementById('manual-form-panel');
+    const toggle = document.getElementById('manual-form-toggle');
+    if (!panel || !toggle) return;
+    panel.classList.add('open');
+    toggle.textContent = 'Close';
+    if (scrollIntoView) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function closeManualForm() {
+    const panel = document.getElementById('manual-form-panel');
+    const toggle = document.getElementById('manual-form-toggle');
+    if (!panel || !toggle) return;
+    panel.classList.remove('open');
+    toggle.textContent = 'Open';
+  }
+
+  function toggleManualForm() {
+    const panel = document.getElementById('manual-form-panel');
+    if (!panel) return;
+    if (panel.classList.contains('open')) {
+      closeManualForm();
+    } else {
+      openManualForm(true);
+    }
   }
 
   // ── Guided builder ────────────────────────────────────────────────
@@ -470,16 +501,76 @@
     preview.textContent = buildGuidedPromptText();
   }
 
-  function loadBuilderExample() {
-    document.getElementById('builder-name').value = 'Post-Incident Customer Summary';
-    document.getElementById('builder-tag').value = 'Support';
-    document.getElementById('builder-persona').value = 'Technical Account Management';
-    document.getElementById('builder-role').value = 'You are a Technical Account Manager.';
-    document.getElementById('builder-task').value = 'Write a post-incident email to the customer based on the outage details below.';
-    document.getElementById('builder-style').value = 'Transparent, accountable, and reassuring. No defensive language.';
-    document.getElementById('builder-format').value = 'Return only the email. Structure: What Happened, Customer Impact, What We Fixed, Next Steps.';
-    document.getElementById('builder-input').value = 'Paste the incident timeline, root cause notes, and customer context here.';
+  const BUILDER_PRESETS = {
+    email: {
+      name: 'Professional Email Draft',
+      tag: 'Email',
+      persona: 'Everyday',
+      role: 'You are a professional business communicator.',
+      task: 'Write a professional email based on the notes or context below.',
+      style: 'Clear, direct, and appropriately formal. No exclamation marks.',
+      format: 'Subject line + email body. Keep it concise and practical.',
+      input: 'Paste the purpose, audience, and bullet points here.'
+    },
+    summary: {
+      name: 'Executive Summary',
+      tag: 'Writing',
+      persona: 'Everyday',
+      role: 'You are a clear and concise communicator.',
+      task: 'Summarise the document or notes below into the key points.',
+      style: 'Neutral, factual, and easy to scan.',
+      format: 'One-sentence summary at the top, then 3-5 bullet points.',
+      input: 'Paste the article, meeting notes, or document excerpt here.'
+    },
+    'code-review': {
+      name: 'Code Review',
+      tag: 'Code Quality',
+      persona: 'Developer',
+      role: 'You are a senior software engineer.',
+      task: 'Review the code below for bugs, performance issues, and deviations from best practices.',
+      style: 'Direct and constructive. Be specific.',
+      format: 'Sections: Critical Issues, Warnings, Suggestions.',
+      input: 'Paste the code snippet, diff, or pull request context here.'
+    },
+    'stakeholder-update': {
+      name: 'Stakeholder Update',
+      tag: 'Communication',
+      persona: 'Product Owner',
+      role: 'You are a Product Owner sending a weekly stakeholder update.',
+      task: 'Write a concise stakeholder update based on the project notes below.',
+      style: 'Executive-friendly, outcome-focused, and low on jargon.',
+      format: 'Sections: Summary, Shipped This Week, In Progress, Blockers, Next Week.',
+      input: 'Paste the latest delivery notes, blockers, and next steps here.'
+    },
+    'post-incident': {
+      name: 'Post-Incident Customer Summary',
+      tag: 'Support',
+      persona: 'Technical Account Management',
+      role: 'You are a Technical Account Manager.',
+      task: 'Write a post-incident email to the customer based on the outage details below.',
+      style: 'Transparent, accountable, and reassuring. No defensive language.',
+      format: 'Return only the email. Structure: What Happened, Customer Impact, What We Fixed, Next Steps.',
+      input: 'Paste the incident timeline, root cause notes, and customer context here.'
+    }
+  };
+
+  function applyBuilderPreset(presetKey) {
+    const preset = BUILDER_PRESETS[presetKey];
+    if (!preset) return;
+
+    document.getElementById('builder-name').value = preset.name;
+    document.getElementById('builder-tag').value = preset.tag;
+    document.getElementById('builder-persona').value = preset.persona;
+    document.getElementById('builder-role').value = preset.role;
+    document.getElementById('builder-task').value = preset.task;
+    document.getElementById('builder-style').value = preset.style;
+    document.getElementById('builder-format').value = preset.format;
+    document.getElementById('builder-input').value = preset.input;
     updateBuilderPreview();
+  }
+
+  function loadBuilderExample() {
+    applyBuilderPreset('post-incident');
   }
 
   function clearBuilder() {
@@ -509,6 +600,7 @@
     const persona = document.getElementById('builder-persona').value;
     const promptText = buildGuidedPromptText();
 
+    openManualForm(true);
     document.getElementById('prompt-name').value = name;
     document.getElementById('prompt-tag').value = tag;
     document.getElementById('prompt-persona').value = persona;

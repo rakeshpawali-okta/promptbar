@@ -643,6 +643,55 @@
     .guided-builder-header h3 { font-size: 15px; color: var(--dark); margin-bottom: 4px; }
     .guided-builder-header p { font-size: 12px; line-height: 1.6; color: var(--text-secondary); }
 
+    .builder-presets {
+      margin-bottom: 18px;
+      padding: 12px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .builder-presets-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 10px;
+    }
+
+    .builder-preset-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .builder-preset-btn {
+      background: #fff7f3;
+      border: 1px solid #f1e4dc;
+      color: var(--dark);
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .builder-preset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #fff2eb;
+    }
+
+    .builder-field-help {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: -2px;
+    }
+
     .guided-builder-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -695,6 +744,63 @@
       white-space: pre-wrap;
       word-break: break-word;
       font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+    }
+
+    .manual-form-panel {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfcfc;
+      overflow: hidden;
+    }
+
+    .manual-form-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .manual-form-header h3 {
+      font-size: 15px;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .manual-form-header p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .manual-form-toggle {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .manual-form-toggle:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .manual-form-body {
+      display: none;
+      padding: 18px 18px 0;
+    }
+
+    .manual-form-panel.open .manual-form-body {
+      display: block;
     }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }

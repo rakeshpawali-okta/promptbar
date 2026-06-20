@@ -312,13 +312,26 @@
         </div>
       </div>
 
+      <div class="builder-presets">
+        <div class="builder-presets-label">Quick starts</div>
+        <div class="builder-preset-list">
+          <button class="builder-preset-btn" type="button" onclick="applyBuilderPreset('email')">Write an email</button>
+          <button class="builder-preset-btn" type="button" onclick="applyBuilderPreset('summary')">Summarise a document</button>
+          <button class="builder-preset-btn" type="button" onclick="applyBuilderPreset('code-review')">Review code</button>
+          <button class="builder-preset-btn" type="button" onclick="applyBuilderPreset('stakeholder-update')">Stakeholder update</button>
+          <button class="builder-preset-btn" type="button" onclick="applyBuilderPreset('post-incident')">Post-incident summary</button>
+        </div>
+      </div>
+
       <div class="guided-builder-grid">
         <div class="form-group">
           <label for="builder-name">Prompt Name</label>
+          <div class="builder-field-help">A short label people will recognize later.</div>
           <input type="text" id="builder-name" placeholder="e.g. TAM Post-Incident Summary" oninput="updateBuilderPreview()">
         </div>
         <div class="form-group">
           <label for="builder-tag">Category</label>
+          <div class="builder-field-help">Group similar prompts together, like Support or Writing.</div>
           <input type="text" id="builder-tag" placeholder="e.g. Support, Documentation" oninput="updateBuilderPreview()">
         </div>
       </div>
@@ -326,6 +339,7 @@
       <div class="guided-builder-grid">
         <div class="form-group">
           <label for="builder-persona">Persona</label>
+          <div class="builder-field-help">Choose the audience or job context this prompt belongs to.</div>
           <select id="builder-persona" onchange="updateBuilderPreview()">
             <option value="Everyday">Everyday</option>
             <option value="Developer">Developer</option>
@@ -343,40 +357,57 @@
         </div>
         <div class="form-group">
           <label for="builder-role">Role</label>
+          <div class="builder-field-help">Who should the AI act like when answering?</div>
           <input type="text" id="builder-role" placeholder="e.g. You are a Technical Account Manager." oninput="updateBuilderPreview()">
         </div>
       </div>
 
       <div class="form-group" style="margin-bottom:16px;">
         <label for="builder-task">Task</label>
+        <div class="builder-field-help">What exactly should the AI do?</div>
         <textarea id="builder-task" placeholder="What should the model do? e.g. Write a post-incident email to the customer based on the outage details below." oninput="updateBuilderPreview()"></textarea>
       </div>
 
       <div class="guided-builder-grid">
         <div class="form-group">
           <label for="builder-style">Style</label>
+          <div class="builder-field-help">Set the tone, depth, and voice you want back.</div>
           <textarea id="builder-style" placeholder="e.g. Transparent, reassuring, plain English. No defensive language." oninput="updateBuilderPreview()"></textarea>
         </div>
         <div class="form-group">
           <label for="builder-format">Format</label>
+          <div class="builder-field-help">Describe the output shape: bullets, email, table, summary, checklist.</div>
           <textarea id="builder-format" placeholder="e.g. Return only the email. Structure: What Happened, Customer Impact, What We Fixed, Next Steps." oninput="updateBuilderPreview()"></textarea>
         </div>
       </div>
 
       <div class="form-group" style="margin-bottom:16px;">
         <label for="builder-input">Input</label>
+        <div class="builder-field-help">What content or context will you paste in each time?</div>
         <input type="text" id="builder-input" placeholder="e.g. Paste the incident notes, timeline, and customer context here." oninput="updateBuilderPreview()">
       </div>
 
       <div class="builder-actions">
         <button class="save-btn" type="button" onclick="buildGuidedPrompt()">Generate Draft Below</button>
         <button class="builder-secondary-btn" type="button" onclick="loadBuilderExample()">Load Example</button>
+        <button class="builder-secondary-btn" type="button" onclick="openManualForm(true)">Write Manually Instead</button>
         <button class="builder-secondary-btn" type="button" onclick="clearBuilder()">Clear</button>
-        <span class="builder-hint">This creates a draft in the save form below. You can edit it before saving.</span>
+        <span class="builder-hint">This creates a draft in the review panel below. You can edit it before saving.</span>
       </div>
 
       <pre class="guided-builder-preview" id="guided-builder-preview"></pre>
     </div>
+
+    <div class="manual-form-panel" id="manual-form-panel">
+      <div class="manual-form-header">
+        <div>
+          <h3>Review and Save</h3>
+          <p>Edit the generated draft, or write the full prompt manually if you prefer.</p>
+        </div>
+        <button class="manual-form-toggle" type="button" id="manual-form-toggle" onclick="toggleManualForm()">Open</button>
+      </div>
+
+      <div class="manual-form-body" id="manual-form-body">
 
     <div class="form-row">
       <div class="form-group">
@@ -423,6 +454,8 @@
       </button>
       <button class="cancel-btn" id="cancel-edit-btn" onclick="cancelEdit()" style="display:none">Cancel</button>
       <span class="form-hint" id="form-hint">Saved prompts appear in My Templates above</span>
+    </div>
+      </div>
     </div>
   </div>
 
