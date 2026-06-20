@@ -64,6 +64,18 @@ All prompts follow a structured format with five fields:
 
 The `[ROLE]`, `[TASK]`, `[STYLE]`, `[FORMAT]` labels are shown in the library for readability but are **automatically stripped before injection** so the AI receives clean instructions.
 
+## Why This Structure Works
+
+The five fields make prompts easier to reuse, edit, and share because each part has one job:
+
+- `Role` sets the perspective the model should take.
+- `Task` makes the objective unambiguous.
+- `Style` controls tone, depth, and voice.
+- `Format` tells the model exactly how to present the answer.
+- `Input` separates the reusable prompt from the content you are working on.
+
+That separation helps people get more consistent results, and it makes the prompts much easier to copy, tweak, or turn into a reusable template.
+
 ---
 
 ## Importing a Prompt Pack

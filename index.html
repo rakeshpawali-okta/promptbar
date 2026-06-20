@@ -758,6 +758,59 @@
       flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px;
     }
 
+    /* ── Value section ── */
+    .value-section {
+      margin: 8px 0 28px;
+      background: linear-gradient(180deg, #fff, #fff7f3);
+      border: 1px solid #f1e4dc;
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .value-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .value-title {
+      font-size: 18px; font-weight: 700; color: var(--dark);
+      letter-spacing: -0.2px; margin-bottom: 8px;
+    }
+
+    .value-copy {
+      font-size: 13px; line-height: 1.7; color: var(--text-secondary);
+      max-width: 760px; margin-bottom: 18px;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .value-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 12px;
+      min-height: 122px;
+    }
+
+    .value-card strong {
+      display: block;
+      font-size: 13px;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+
+    .value-card p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
     /* ── Mobile ── */
     @media (max-width: 640px) {
       header { padding: 0 16px; }
@@ -793,6 +846,9 @@
 
       /* Form actions wrap */
       .form-actions { flex-wrap: wrap; }
+
+      .value-section { padding: 18px; }
+      .value-grid { grid-template-columns: 1fr; }
     }
 
     /* Bookmarks bar doesn't exist on touch devices — hide drag button, promote copy */
@@ -934,6 +990,25 @@
 
     </div>
 
+  </div>
+
+  <!-- Why PromptBar helps -->
+  <div class="value-section">
+    <div class="value-kicker">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>
+      Why it helps
+    </div>
+    <div class="value-title">PromptBar turns good prompting into a repeatable system.</div>
+    <p class="value-copy">
+      Most people know what they want to ask the model, but not how to structure the prompt. PromptBar gives them a simple pattern so results are clearer, easier to reuse, and faster to share across a team.
+    </p>
+    <div class="value-grid">
+      <div class="value-card"><strong>Role</strong><p>Sets the perspective the model should take so the answer comes from the right point of view.</p></div>
+      <div class="value-card"><strong>Task</strong><p>Makes the objective explicit so the model knows exactly what to do.</p></div>
+      <div class="value-card"><strong>Style</strong><p>Controls tone, depth, and voice so outputs feel consistent.</p></div>
+      <div class="value-card"><strong>Format</strong><p>Tells the model how to structure the answer so it is easier to use.</p></div>
+      <div class="value-card"><strong>Input</strong><p>Keeps the reusable prompt separate from the content you change each time.</p></div>
+    </div>
   </div>
 
   <!-- Setup -->
